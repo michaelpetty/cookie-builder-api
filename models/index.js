@@ -10,7 +10,7 @@ const sequelize = new Sequelize({
 
 //const Recipe = RecipeModel(sequelize, Sequelize);
 //const RecipeIngredient = RecipeIngredientModel(sequelize, Sequelize);
-const Ingredient = IngredientModel(sequelize, Sequelize);
+const Ingredient = IngredientModel.init(sequelize, Sequelize);
 
 //Recipe.belongs
 
