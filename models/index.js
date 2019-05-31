@@ -1,7 +1,7 @@
-const Sequelize = require('sequlize');
+const Sequelize = require('sequelize');
 //const RecipeModel = require('./models/recipe');
 //const RecipeIngredientModel = require('./models/recipeingredient');
-const IngredientModel = require('./models/ingredient');
+const IngredientModel = require('./ingredient');
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
