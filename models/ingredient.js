@@ -5,6 +5,7 @@ class Ingredient extends Sequelize.Model {
     return super.init({
       name: {
         type:Sequelize.STRING,
+        unique: true,
         allowNull: false
       }
     }, {

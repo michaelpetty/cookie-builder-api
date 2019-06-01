@@ -14,7 +14,7 @@ const Ingredient = IngredientModel.init(sequelize, Sequelize);
 
 //Recipe.belongs
 
-sequelize.sync()
+sequelize.sync({force:true})
   .then(() => {
     console.log('Database and tables created');
   })
