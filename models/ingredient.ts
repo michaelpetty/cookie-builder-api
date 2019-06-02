@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
 class Ingredient extends Sequelize.Model {
   static init(sequelize, type) {
@@ -24,4 +24,4 @@ class Ingredient extends Sequelize.Model {
 //     })
 // }
 
-module.exports = Ingredient;
+export default Ingredient;

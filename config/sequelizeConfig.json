@@ -1,0 +1,10 @@
+{
+  "database": "cookie",
+  "username": "postgres",
+  "password": null,
+  "params": {
+    "host": "localhost",
+    "dialect": "postgres",
+    "operatorsAliases": false
+  }
+}
