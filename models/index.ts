@@ -1,6 +1,9 @@
 import Sequelize from 'sequelize';
 import { DbInterface } from 'typings/DbInterface';
 import { RecipeFactory } from './recipe';
+import { RecipeStepFactory } from './recipestep';
+import { RecIngFactory } from './recipeingredient';
+import {IngredientFactory } from './ingredient';
 
 export const createModels = (sequelizeConfig: any): DbInterface => {
   // const { database, username, password, params } = sequelizeConfig;
@@ -13,32 +16,11 @@ export const createModels = (sequelizeConfig: any): DbInterface => {
   const db: DbInterface = {
     sequelize,
     Sequelize,
-    Recipe: RecipeFactory(sequelize, Sequelize)
+    Recipe: RecipeFactory(sequelize, Sequelize),
+    RecipeStep: RecipeStepFactory(sequelize, Sequelize),
+    RecIng: RecIngFactory(sequelize, Sequelize),
+    Ingredient: IngredientFactory(sequelize, Sequelize)
   }
 
   return db;
 }
-
-//const RecipeModel = require('./models/recipe');
-//const RecipeIngredientModel = require('./models/recipeingredient');
-//import IngredientModel from './ingredient';
-
-// const sequelize = new Sequelize({
-//   dialect: 'sqlite',
-//   storage: './db.development.sqlite'
-// })
-
-//const Recipe = RecipeModel(sequelize, Sequelize);
-//const RecipeIngredient = RecipeIngredientModel(sequelize, Sequelize);
-//export const Ingredient = IngredientModel.init(sequelize, Sequelize);
-
-//Recipe.belongs
-
-// sequelize.sync({force:true})
-//   .then(() => {
-//     console.log('Database and tables created');
-//   })
-
-// module.exports = {
-//   Ingredient
-// }

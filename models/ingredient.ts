@@ -1,27 +1,25 @@
-import Sequelize from 'sequelize';
+import * as Sequelize from 'sequelize';
+import { SequelizeAttributes } from 'typings/SequelizeAttributes';
 
-class Ingredient extends Sequelize.Model {
-  static init(sequelize, type) {
-    return super.init({
-      name: {
-        type:Sequelize.STRING,
-        unique: true,
-        allowNull: false
-      }
-    }, {
-      sequelize,
-      modelName: 'ingredient'
-    })
-  }
+export interface IngredientAttributes {
+  id?: number;
+  name: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-// module.exports = (sequelize, type) => {
-//     return sequelize.define('ingredient', {
-//         name: {
-//           type: type.STRING,
-//           allowNull: false
-//         }
-//     })
-// }
+export interface IngredientInstance extends Sequelize.Instance<IngredientAttributes>, IngredientAttributes {}
 
-export default Ingredient;
+export const IngredientFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<IngredientInstance, IngredientAttributes> => {
+  const attributes: SequelizeAttributes<IngredientAttributes> = {
+    name: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false
+    }
+  }
+
+  const Ingredient = sequelize.define<IngredientInstance, IngredientAttributes>('Ingredient', attributes);
+
+  return Ingredient;
+}
