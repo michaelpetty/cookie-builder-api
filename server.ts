@@ -9,10 +9,10 @@ const sequelizeConfig = require('./config/sequelizeConfig.json');
 const app: express.Application = express();
 
 const db = createModels(sequelizeConfig);
-db.sequelize.sync({force: true})
-  .then(() => {
-    console.log('Database and tables created');
-  })
+// db.sequelize.sync({force: true})
+//   .then(() => {
+//     console.log('Database and tables created');
+//   })
 
 //----------------- MIDDLEWARE ---------------//
 app.use(bodyParser.urlencoded({extended: false}));
