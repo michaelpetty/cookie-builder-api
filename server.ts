@@ -5,6 +5,7 @@ import { createModels } from './models';
 import { RecipeInstance } from  'models/recipe';
 import { IngredientInstance } from 'models/ingredient';
 const sequelizeConfig = require('./config/sequelizeConfig.json');
+const PORT = process.env.PORT || 4000;
 
 const app: express.Application = express();
 
@@ -53,4 +54,4 @@ app.post('/api/v1/recipes', (req: Request, res: Response) => {
 
 
 //----------------- START 'ER UP ---------------//
-app.listen(3000, () => console.log(`API started on port 3000`));
+app.listen(PORT, () => console.log(`API started on port ${PORT}`));
