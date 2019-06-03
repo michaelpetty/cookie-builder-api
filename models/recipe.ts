@@ -1,5 +1,6 @@
 import * as Sequelize from 'sequelize';
 import { SequelizeAttributes } from 'typings/SequelizeAttributes';
+import { RecipeStepAttributes, RecipeStepInstance } from 'models/recipestep';
 
 export interface RecipeAttributes {
   id?: number;
@@ -16,10 +17,12 @@ export interface RecipeAttributes {
   sourceURL: string;
   createdAt?: Date;
   updatedAt?: Date;
+  RecipeStep?: RecipeStepAttributes[] | RecipeStepAttributes['id'][];
 }
 
 export interface RecipeInstance extends Sequelize.Instance<RecipeAttributes>, RecipeAttributes {
-
+  getRecipeSteps: Sequelize.HasManyGetAssociationsMixin<RecipeStepInstance>;
+  setRecipeSteps: Sequelize.HasManySetAssociationsMixin<RecipeStepInstance, RecipeStepInstance['id']>;
 }
 
 export const RecipeFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<RecipeInstance, RecipeAttributes> => {
@@ -63,6 +66,10 @@ export const RecipeFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequeli
   }
 
   const Recipe = sequelize.define<RecipeInstance, RecipeAttributes>('Recipe', attributes);
+
+  Recipe.associate = models => {
+    Recipe.hasMany(models.RecipeStep);
+  }
 
   return Recipe;
 }
