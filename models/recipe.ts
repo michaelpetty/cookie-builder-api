@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize';
 import { SequelizeAttributes } from 'typings/SequelizeAttributes';
 import { RecipeStepAttributes, RecipeStepInstance } from 'models/recipestep';
+import { RecIngAttributes, RecIngInstance } from 'models/recipeingredient';
 
 export interface RecipeAttributes {
   id?: number;
@@ -18,11 +19,14 @@ export interface RecipeAttributes {
   createdAt?: Date;
   updatedAt?: Date;
   RecipeStep?: RecipeStepAttributes[] | RecipeStepAttributes['id'][];
+  RecIng?: RecIngAttributes[] | RecIngAttributes['id'][];
 }
 
 export interface RecipeInstance extends Sequelize.Instance<RecipeAttributes>, RecipeAttributes {
   getRecipeSteps: Sequelize.HasManyGetAssociationsMixin<RecipeStepInstance>;
   setRecipeSteps: Sequelize.HasManySetAssociationsMixin<RecipeStepInstance, RecipeStepInstance['id']>;
+  getRecIngs: Sequelize.HasManyGetAssociationsMixin<RecIngInstance>;
+  setRecIngs: Sequelize.HasManySetAssociationsMixin<RecIngInstance, RecIngInstance['id']>;
 }
 
 export const RecipeFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<RecipeInstance, RecipeAttributes> => {
@@ -69,6 +73,7 @@ export const RecipeFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequeli
 
   Recipe.associate = models => {
     Recipe.hasMany(models.RecipeStep);
+    Recipe.hasMany(models.RecIng);
   }
 
   return Recipe;
