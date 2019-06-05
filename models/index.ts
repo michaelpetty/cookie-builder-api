@@ -4,6 +4,7 @@ import { RecipeFactory } from './recipe';
 import { RecipeStepFactory } from './recipestep';
 import { RecIngFactory } from './recipeingredient';
 import {IngredientFactory } from './ingredient';
+import {UserFactory } from './user';
 
 export const createModels = (sequelizeConfig: any): DbInterface => {
   // const { database, username, password, params } = sequelizeConfig;
@@ -19,7 +20,8 @@ export const createModels = (sequelizeConfig: any): DbInterface => {
     Recipe: RecipeFactory(sequelize, Sequelize),
     RecipeStep: RecipeStepFactory(sequelize, Sequelize),
     RecIng: RecIngFactory(sequelize, Sequelize),
-    Ingredient: IngredientFactory(sequelize, Sequelize)
+    Ingredient: IngredientFactory(sequelize, Sequelize),
+    User: UserFactory(sequelize, Sequelize)
   }
 
   Object.keys(db).forEach(modelName => {

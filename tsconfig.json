@@ -24,6 +24,8 @@
       ]
     },
     "types": [
+      "bcrypt",
+      "jsonwebtoken",
       "node",
       "express",
       "sequelize",
