@@ -4,6 +4,7 @@ import { SequelizeAttributes } from 'typings/SequelizeAttributes';
 export interface IngredientAttributes {
   id?: number;
   name: string;
+  popularity?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -16,6 +17,11 @@ export const IngredientFactory = (sequelize: Sequelize.Sequelize, DataTypes: Seq
       type: DataTypes.STRING,
       unique: true,
       allowNull: false
+    },
+    popularity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 100
     }
   }
 

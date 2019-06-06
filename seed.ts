@@ -29,7 +29,23 @@ const ingredientsData = [
     name: "vanilla"
   },
   {
-    name: "semi-sweet chocolate chips"
+    name: "semi-sweet chocolate chips",
+    popularity: 1
+  },
+  {
+    name: "oats",
+    popularity: 3
+  },
+  {
+    name: "peanut butter",
+    popularity: 2
+  },
+  {
+    name: "cinnamon"
+  },
+  {
+    name: "raisins",
+    popularity: 4
   }
 ]
 
@@ -38,15 +54,29 @@ const recipesData = [
   {
     name: "Toll house Chocolate Chip",
     picture: "https://www.diningandcooking.com/wp-content/uploads/2018/03/Toll-House-Chocolate-Chip-Cookies-2.jpg",
-    price: 15.99,
+    price: 12.99,
     yield: "Makes about 5 dozen",
     activeTime: "15 minutes",
-    totalTime: "11 minutes",
+    totalTime: "30 minutes",
     preheat: "375",
     intro: "",
     note: "",
     source: "Very Best Baking by Nestle",
     sourceURL: "https://www.verybestbaking.com/recipes/18476/original-nestle-toll-house-chocolate-chip-cookies/"
+  },
+  //recipe 2
+  {
+    name: "Vanishing Oatmeal Raisin",
+    picture: "https://www.quakeroats.com/images/default-source/RecipeModule/vanishing-oatmeal-raisin-cookies-related-recipe.jpg?sfvrsn=82e83652_0",
+    price: 15.99,
+    yield: "4 dozen",
+    activeTime: "15 minutes",
+    totalTime: "25 minutes",
+    preheat: "350",
+    intro: "",
+    note: "Variations: Stir in 1 cup chopped nuts. Substitute 1 cup semisweet chocolate chips or candy-coated chocolate pieces for raisins; omit cinnamon. Substitute 1 cup diced dried mixed fruit.",
+    source: "Quaker Oats",
+    sourceURL: "https://www.quakeroats.com/cooking-and-recipe/vanishing-oatmeal-raisin-cookies/"
   }
 ]
 
@@ -92,6 +122,167 @@ const recipeStepsData = [
     body: "Let stand for 2 minute; remove to wire racks to cool completely.",
     stepOrder: 8,
     RecipeId: 0
+  }],
+  //recipe 2
+  [{
+    body: "In large bowl, beat butter and sugars on medium speed of electric mixer until creamy. Add eggs and vanilla; beat well.",
+    stepOrder: 1,
+    RecipeId: 0
+  },
+  {
+    body: " Add combined flour, baking soda, cinnamon and salt; mix well.",
+    stepOrder: 2,
+    RecipeId: 0
+  },
+  {
+    body: "Add oats and raisins; mix well.",
+    stepOrder: 3,
+    RecipeId: 0
+  },
+  {
+    body: "Drop dough by rounded tablespoonfuls onto ungreased cookie sheets.",
+    stepOrder: 4,
+    RecipeId: 0
+  },
+  {
+    body: "Bake 8 to 10 minutes or until light golden brown.",
+    stepOrder: 5,
+    RecipeId: 0
+  },
+  {
+    body: "Cool 1 minute on cookie sheets; remove to wire rack. Cool completely. Store tightly covered.",
+    stepOrder: 6,
+    RecipeId: 0
+  }],
+]
+
+const recipeIngredientData = [
+  [], //placeholder
+  //recipe 1 ingredients
+  [{
+    RecipeId: 0,
+    IngredientId: 1,
+    recIngOrder: 1,
+    amount: '2 1/4',
+    unit: 'cups'
+  },
+  {
+    RecipeId: 0,
+    IngredientId: 2,
+    recIngOrder: 2,
+    amount: '1',
+    unit: 'tsp.'
+  },{
+    RecipeId: 0,
+    IngredientId: 3,
+    recIngOrder: 3,
+    amount: '1',
+    unit: 'tsp.'
+  },{
+    RecipeId: 0,
+    IngredientId: 4,
+    recIngOrder: 4,
+    preparation: 'softened',
+    amount: '1',
+    unit: 'cup'
+  },{
+    RecipeId: 0,
+    IngredientId: 5,
+    recIngOrder: 5,
+    amount: '3/4',
+    unit: 'cup'
+  },{
+    RecipeId: 0,
+    IngredientId: 6,
+    recIngOrder: 6,
+    amount: '3/4',
+    unit: 'cup'
+  },{
+    RecipeId: 0,
+    IngredientId: 7,
+    recIngOrder: 7,
+    amount: '2',
+  },{
+    RecipeId: 0,
+    IngredientId: 8,
+    recIngOrder: 8,
+    amount: '1',
+    unit: 'tsp.'
+  },{
+    RecipeId: 0,
+    IngredientId: 9,
+    recIngOrder: 9,
+    amount: '2',
+    unit: 'cups'
+  }],
+  //recipe 2 ingredients
+  [{
+    RecipeId: 0,
+    IngredientId: 4,
+    recIngOrder: 1,
+    amount: '14',
+    preparation: 'softened',
+    unit: 'tbl.'
+  },
+  {
+    RecipeId: 0,
+    IngredientId: 6,
+    recIngOrder: 2,
+    amount: '3/4',
+    unit: 'cup'
+  },{
+    RecipeId: 0,
+    IngredientId: 5,
+    recIngOrder: 3,
+    amount: '1/2',
+    unit: 'cup'
+  },{
+    RecipeId: 0,
+    IngredientId: 7,
+    recIngOrder: 4,
+    amount: '2',
+  },{
+    RecipeId: 0,
+    IngredientId: 8,
+    recIngOrder: 5,
+    amount: '1',
+    unit: 'tsp.'
+  },{
+    RecipeId: 0,
+    IngredientId: 1,
+    recIngOrder: 6,
+    amount: '1 1/2',
+    unit: 'cups'
+  },{
+    RecipeId: 0,
+    IngredientId: 2,
+    recIngOrder: 7,
+    amount: '1',
+    unit: 'tsp.'
+  },{
+    RecipeId: 0,
+    IngredientId: 12,
+    recIngOrder: 8,
+    amount: '1',
+    unit: 'tsp.'
+  },{
+    RecipeId: 0,
+    IngredientId: 3,
+    recIngOrder: 9,
+    amount: '1/2',
+    unit: 'tsp.'
+  },{
+    RecipeId: 0,
+    IngredientId: 10,
+    recIngOrder: 10,
+    amount: '3',
+    unit: 'cups'
+  },{
+    RecipeId: 0,
+    IngredientId: 3,
+    recIngOrder: 13,
+    amount: '1',
+    unit: 'cup'
   }]
 ]
 
@@ -116,7 +307,11 @@ const seedDatabase = async () => {
         step.RecipeId = newRecipe.id;
         await db.RecipeStep.create(step);
       }
-      console.log(`Created recipe: ${newRecipe.name} with ${recipeStepsData[newRecipe.id].length} steps`);
+      for (let recIng of recipeIngredientData[newRecipe.id]) {
+        recIng.RecipeId = newRecipe.id;
+        await db.RecIng.create(recIng);
+      }
+      console.log(`Created recipe: ${newRecipe.name} with ${recipeStepsData[newRecipe.id].length} steps and ${recipeIngredientData[newRecipe.id].length} ingredients `);
 
     }
     console.log(`Created ${recipesData.length} recipes`);

@@ -8,7 +8,7 @@ export interface RecipeStepAttributes {
   stepOrder: number;
   createdAt?: Date;
   updatedAt?: Date;
-  RecipeId?: RecipeAttributes | RecipeAttributes['id'];
+  RecipeId: RecipeAttributes | RecipeAttributes['id'];
 }
 
 export interface RecipeStepInstance extends Sequelize.Instance<RecipeStepAttributes>, RecipeStepAttributes {
@@ -18,12 +18,22 @@ export interface RecipeStepInstance extends Sequelize.Instance<RecipeStepAttribu
 
 export const RecipeStepFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<RecipeStepInstance, RecipeStepAttributes> => {
   const attributes: SequelizeAttributes<RecipeStepAttributes> = {
+    RecipeId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: 'recOrderIndex',
+      references: {
+        model: 'Recipes',
+        key: 'id'
+      }
+    },
     body: {
       type: DataTypes.STRING,
       allowNull: false
     },
     stepOrder: {
       type: DataTypes.INTEGER,
+      unique: 'recOrderIndex',
       allowNull: false
     }
   }
