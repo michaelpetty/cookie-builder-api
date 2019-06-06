@@ -52,6 +52,11 @@ app.post('/api/v1/ingredients', (req: Request, res: Response) => {
     .then((ingredient: IngredientInstance) => res.json(ingredient));
 })
 
+app.get('/api/v1/ingredients/top', (req: Request, res: Response) => {
+  db.Ingredient.findAll({order: ['popularity'], limit: 5})
+    .then((ingredients: IngredientInstance[]) => res.json(ingredients));
+})
+
 // Recipe/Ingredient Map
 
 
@@ -74,7 +79,9 @@ app.get('/api/v1/recipes/:id', (req: Request, res: Response) => {
 app.get('/api/v1/recipes/:id/full', async (req: Request, res: Response) => {
   const recipe = await db.Recipe.findByPk(req.params.id);
   const recipeSteps = await recipe.getRecipeSteps();
-  const recings = await recipe.getRecIngs();
+  //const recings = await recipe.getRecIngs({include: [{model: db.Ingredient}]});
+  const recings = await db.RecIng.findAll({where: {RecipeId: req.params.id}, include: [{model: db.Ingredient}]});
+  //{include: [db.Ingredient]}
   res.json({recipe: recipe, recipeSteps: recipeSteps, ingredients:recings});
     // .then(recipe => recipe.getRecipeSteps())
     // .then(recipeSteps => res.json({recipeSteps: recipeSteps, recipe: recipe } ))

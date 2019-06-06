@@ -16,7 +16,8 @@ export interface RecIngAttributes {
 }
 
 export interface RecIngInstance extends Sequelize.Instance<RecIngAttributes>, RecIngAttributes {
-
+  getRecipe: Sequelize.BelongsToGetAssociationMixin<RecipeInstance>;
+  getIngredient: Sequelize.BelongsToGetAssociationMixin<IngredientInstance>;
 }
 
 export const RecIngFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<RecIngInstance, RecIngAttributes> => {
@@ -54,6 +55,11 @@ export const RecIngFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequeli
   }
 
   const RecIng = sequelize.define<RecIngInstance, RecIngAttributes>('RecIng', attributes);
+
+  RecIng.associate = models => {
+    RecIng.belongsTo(models.Recipe);
+    RecIng.belongsTo(models.Ingredient);
+  }
 
   return RecIng;
 
