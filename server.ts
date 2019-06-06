@@ -230,17 +230,20 @@ app.use('/auth/user', (req: RequestPlus, res: Response, next: NextFunction) => {
       iat?: number;
       exp?: number;
     }
-		let verified = jwt.verify(req.token, 'waffles');
-    console.log(`verified: ${typeof verified}`);
-		console.log('here is the verified', verified);
-     if (typeof verified === 'object') {
-       let verifiedObj: verified = verified;
-       console.log('yep, we got an object');
-      req.userId = verifiedObj._id; //set user id for routes to use
-     }
-		next();
-	} else {
-		res.sendStatus(403);
+		jwt.verify(req.token, 'waffles', (err, verified) => {
+      if (err) {
+        return res.json({message: 'Token has expired. Please log back in.', error: err})
+      } else {
+        console.log(`verified: ${typeof verified}`);
+    		console.log('here is the verified', verified);
+         if (typeof verified === 'object') {
+           let verifiedObj: verified = verified;
+           console.log('yep, we got an object');
+          req.userId = verifiedObj._id; //set user id for routes to use
+         }
+        next();
+      }
+    })
 	}
 })
 
