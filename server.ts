@@ -3,6 +3,7 @@ import {Request, Response, NextFunction} from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import { createModels } from './models';
 import { RecipeInstance } from  'models/recipe';
 import { RecipeStepInstance } from  'models/recipestep';
@@ -22,12 +23,21 @@ const db = createModels(sequelizeConfig);
 
 //----------------- MIDDLEWARE ---------------//
 // Express CORS Middleware
-app.use((req: Request, res: Response, next: NextFunction) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+
+// configure CORS options and add whitelist
+const corsOptions = {
+  origin: '*',
+  credentials: true
+}
+app.options('*', cors());
+app.use(cors(corsOptions));
+
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, authorization");
+//     next();
+// });
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
