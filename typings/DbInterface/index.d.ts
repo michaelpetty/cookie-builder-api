@@ -5,6 +5,7 @@ import { RecIngAttributes, RecIngInstance } from 'models/recipeingredient';
 import { IngredientAttributes, IngredientInstance } from 'models/ingredient';
 import { UserAttributes, UserInstance } from 'models/user';
 import { PurchaseAttributes, PurchaseInstance } from 'models/purchase';
+import { FaveAttributes, FaveInstance } from 'models/fave';
 
 export interface DbInterface {
   sequelize: Sequelize.Sequelize;
@@ -15,4 +16,5 @@ export interface DbInterface {
   Ingredient: Sequelize.Model<IngredientInstance, IngredientAttributes>;
   User: Sequelize.Model<UserInstance, UserAttributes>;
   Purchase: Sequelize.Model<PurchaseInstance, PurchaseAttributes>;
+  Fave: Sequelize.Model<FaveInstance, FaveAttributes>;
 }

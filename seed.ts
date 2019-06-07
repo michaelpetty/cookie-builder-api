@@ -324,6 +324,51 @@ const usersData = [
       UserId: 0
       },
     ],
+    faves: [
+      {
+        RecipeId: 1,
+        UserId: 0
+      },
+      {
+        RecipeId: 2,
+        UserId: 0
+      },
+    ]
+  },
+  {
+    name: 'Bo Jangles',
+    email: 'b@b.com',
+    password: '1234',
+    street1: '34 B Ave.',
+    street2: 'Ste. 45',
+    city: 'Berkeley',
+    state: 'CA',
+    postalCode: '94704',
+    orders: [
+      {
+      expectedDelivery: new Date('2019-05-12'),
+      deliveredOn: new Date('2019-05-16'),
+      createdAt: new Date('2019-05-10'),
+      quantity: 4,
+      paid: 62.99,
+      RecipeId: 2,
+      UserId: 0
+      },
+      {
+      expectedDelivery: new Date('2019-06-16'),
+      createdAt: new Date('2019-06-07'),
+      quantity: 1,
+      paid: 12.99,
+      RecipeId: 2,
+      UserId: 0
+      },
+    ],
+    faves: [
+      {
+        RecipeId: 2,
+        UserId: 0
+      },
+    ]
   }
 ]
 const seedDatabase = async () => {
@@ -374,11 +419,11 @@ const seedDatabase = async () => {
         order.UserId = newUser.id;
         await db.Purchase.create(order);
       }
-      // for (let recIng of recipeIngredientData[newRecipe.id]) {
-      //   recIng.RecipeId = newRecipe.id;
-      //   await db.RecIng.create(recIng);
-      // }
-      console.log(`Created user: ${newUser.name} with ${user.orders.length} orders and N faves `);
+      for (let fave of user.faves) {
+        fave.UserId = newUser.id;
+        await db.Fave.create(fave);
+      }
+      console.log(`Created user: ${newUser.name} with ${user.orders.length} orders and ${user.faves.length} faves `);
     }
     console.log(`Created ${usersData.length} users`);
 

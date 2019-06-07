@@ -9,6 +9,8 @@ import { RecipeInstance } from  'models/recipe';
 import { RecipeStepInstance } from  'models/recipestep';
 import { IngredientInstance } from 'models/ingredient';
 import { UserInstance } from 'models/user';
+import { PurchaseInstance } from 'models/purchase';
+import { FaveInstance } from 'models/fave';
 
 const sequelizeConfig = require('./config/sequelizeConfig.json');
 const PORT = process.env.PORT || 4000;
@@ -82,12 +84,8 @@ app.get('/api/v1/recipes/:id', (req: Request, res: Response) => {
 app.get('/api/v1/recipes/:id/full', async (req: Request, res: Response) => {
   const recipe = await db.Recipe.findByPk(req.params.id);
   const recipeSteps = await recipe.getRecipeSteps();
-  //const recings = await recipe.getRecIngs({include: [{model: db.Ingredient}]});
   const recings = await db.RecIng.findAll({where: {RecipeId: req.params.id}, include: [{model: db.Ingredient}]});
-  //{include: [db.Ingredient]}
   res.json({recipe: recipe, recipeSteps: recipeSteps, ingredients:recings});
-    // .then(recipe => recipe.getRecipeSteps())
-    // .then(recipeSteps => res.json({recipeSteps: recipeSteps, recipe: recipe } ))
 })
 
 // Recipe Steps
@@ -189,11 +187,14 @@ app.post('/auth/user/login', (req: Request, res: Response) => {
             {
               expiresIn: '1h'
             },
-            (err, signedJwt) => {
+            async (err, signedJwt) => {
+              const faves = await db.Fave.findAll({where: {UserId: user.id}, include: [{model: db.Recipe}]});
               res.status(200).json({
                 message: 'Auth successful',
                 userJWT,
-                signedJwt
+                signedJwt,
+                user,
+                faves
               });
             }
           )
@@ -262,6 +263,34 @@ app.get('/auth/user', (req: RequestPlus, res: Response) => {
   }
 })
 
+app.get('/auth/user/full', async (req: RequestPlus, res: Response) => {
+  console.log('trigger Show', req.userId);
+  if (req.userId) {
+    const user = await db.User.findByPk(req.userId);
+    const faves = await db.Fave.findAll({where: {UserId: req.userId}, include: [{model: db.Recipe}]});
+    res.json({user: user, faves: faves});
+  } else {
+    res.json('No user Id provided');
+  }
+})
+
+app.get('/auth/user/faves', async (req: RequestPlus, res: Response) => {
+  console.log('trigger Show', req.userId);
+  if (req.userId) {
+    res.json(await db.Fave.findAll({where: {UserId: req.userId}, include: [{model: db.Recipe}]}));
+  } else {
+    res.json('No user Id provided');
+  }
+})
+
+app.get('/auth/user/orders', async (req: RequestPlus, res: Response) => {
+  console.log('trigger Show', req.userId);
+  if (req.userId) {
+    res.json(await db.Purchase.findAll({where: {UserId: req.userId}, include: [{model: db.Recipe}]}));
+  } else {
+    res.json('No user Id provided');
+  }
+})
 
 //----------------- START 'ER UP ---------------//
 app.listen(PORT, () => console.log(`API started on port ${PORT}`));
