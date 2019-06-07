@@ -61,9 +61,12 @@ app.get('/api/v1/ingredients/top', (req: Request, res: Response) => {
 
 
 // Recipes
-app.get('/api/v1/recipes', (req: Request, res: Response) => {
-  db.Recipe.findAll()
-    .then((recipes: RecipeInstance[]) => res.json(recipes));
+app.get('/api/v1/recipes', async (req: Request, res: Response) => {
+  if (req.query.ingredient) {
+    res.json(await db.RecIng.findAll({where: {IngredientId: req.query.ingredient}, include: [{model: db.Recipe}]}));
+  } else {
+    res.json(await db.Recipe.findAll());
+  }
 })
 
 app.post('/api/v1/recipes', (req: Request, res: Response) => {
