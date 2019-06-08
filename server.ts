@@ -283,10 +283,27 @@ app.get('/auth/user/faves', async (req: RequestPlus, res: Response) => {
   }
 })
 
+app.post('/auth/user/faves/:recipeId', async (req: RequestPlus, res: Response) => {
+  if (req.userId) {
+    res.json(await db.Fave.create({RecipeId: req.params.id, UserId: req.userId}));
+  } else {
+    res.json('No user Id provided');
+  }
+})
+
+app.delete('/auth/user/faves/:recipeId', async (req: RequestPlus, res: Response) => {
+  if (req.userId) {
+    res.json(await db.Fave.destroy({where: {RecipeId: req.params.id, UserId: req.userId}}));
+  } else {
+    res.json('No user Id provided');
+  }
+})
+
 app.get('/auth/user/orders', async (req: RequestPlus, res: Response) => {
   console.log('trigger Show', req.userId);
   if (req.userId) {
-    res.json(await db.Purchase.findAll({where: {UserId: req.userId}, include: [{model: db.Recipe}]}));
+    const purchases = await db.Purchase.findAll({where: {UserId: req.userId}, include: [{model: db.Recipe}]});
+    res.json(purchases);
   } else {
     res.json('No user Id provided');
   }

@@ -280,8 +280,8 @@ const recipeIngredientData = [
     unit: 'cups'
   },{
     RecipeId: 0,
-    IngredientId: 3,
-    recIngOrder: 13,
+    IngredientId: 13,
+    recIngOrder: 11,
     amount: '1',
     unit: 'cup'
   }]
