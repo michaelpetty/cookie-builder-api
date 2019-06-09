@@ -236,7 +236,7 @@ app.use('/auth/user', (req: RequestPlus, res: Response, next: NextFunction) => {
     }
 		jwt.verify(req.token, 'waffles', (err, verified) => {
       if (err) {
-        return res.json({message: 'Token has expired. Please log back in.', error: err})
+        return res.status(401).json({status: 401, message: 'Token has expired. Please log back in.', error: err})
       } else {
         console.log(`verified: ${typeof verified}`);
     		console.log('here is the verified', verified);
@@ -304,6 +304,15 @@ app.get('/auth/user/orders', async (req: RequestPlus, res: Response) => {
   if (req.userId) {
     const purchases = await db.Purchase.findAll({where: {UserId: req.userId}, include: [{model: db.Recipe}]});
     res.json(purchases);
+  } else {
+    res.json('No user Id provided');
+  }
+})
+
+app.post('/auth/user/orders', async (req: RequestPlus, res: Response) => {
+  if (req.userId) {
+    const purchase = await db.Purchase.create(req.body);
+    res.json(purchase);
   } else {
     res.json('No user Id provided');
   }
