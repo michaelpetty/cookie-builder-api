@@ -302,7 +302,7 @@ app.delete('/auth/user/faves/:recipeId', async (req: RequestPlus, res: Response)
 app.get('/auth/user/orders', async (req: RequestPlus, res: Response) => {
   console.log('trigger Show', req.userId);
   if (req.userId) {
-    const purchases = await db.Purchase.findAll({where: {UserId: req.userId}, include: [{model: db.Recipe}]});
+    const purchases = await db.Purchase.findAll({where: {UserId: req.userId}, include: [{model: db.Recipe}], order: [['createdAt', 'DESC']],});
     res.json(purchases);
   } else {
     res.json('No user Id provided');
