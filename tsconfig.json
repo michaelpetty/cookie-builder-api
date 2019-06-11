@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "build",
+    "baseUrl": ".",
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "paths": {
+      "typings/*": [
+        "./typings/*"
+      ],
+      "models/*": [
+        "./models/*"
+      ],
+      "*": [
+        "./node_modules/*"
+      ]
+    },
+    "types": [
+      "bcrypt",
+      "jsonwebtoken",
+      "node",
+      "express",
+      "sequelize",
+      "body-parser",
+      "pg"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "include": [
+    "./**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -2,25 +2,45 @@
   "name": "cookie-builder-api",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "build/server.js",
   "scripts": {
+    "start-dev": "nodemon --exec ts-node  server.ts",
+    "build": "rm -rf ./build && tsc",
+    "start": "node build/server.js",
+    "seed-data": "ts-node seed.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/michaelpetty/cookie-builder-api.git"
   },
-  "author": "michael.petty@gmail.com",
+  "author": "michael petty",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/michaelpetty/cookie-builder-api/issues"
   },
   "homepage": "https://github.com/michaelpetty/cookie-builder-api#readme",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "nodemon": "^1.19.1",
-    "sequelize": "^5.8.7",
-    "sqlite3": "^4.0.8"
+    "cors": "^2.8.5",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.38.0",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/body-parser": "^1.17.0",
+    "@types/cors": "^2.8.5",
+    "@types/express": "^4.16.0",
+    "@types/jsonwebtoken": "^8.3.2",
+    "@types/pg": "^7.4.14",
+    "@types/sequelize": "^4.27.24",
+    "tslint-clean-code": "^0.2.7"
   }
 }
