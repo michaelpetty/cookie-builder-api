@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { createModels } from './models';
 import { RecipeInstance } from  'models/recipe';
 import { IngredientInstance } from 'models/ingredient';
@@ -279,13 +280,97 @@ const recipeIngredientData = [
     unit: 'cups'
   },{
     RecipeId: 0,
-    IngredientId: 3,
-    recIngOrder: 13,
+    IngredientId: 13,
+    recIngOrder: 11,
     amount: '1',
     unit: 'cup'
   }]
 ]
 
+const usersData = [
+  {
+    name: 'Ann Taylor',
+    email: 'a@a.com',
+    password: '1234',
+    street1: '12 A St.',
+    city: 'Ann Arbor',
+    state: 'ME',
+    postalCode: '00123',
+    orders: [
+      {
+      expectedDelivery: new Date('2019-01-01'),
+      deliveredOn: new Date('2019-01-02'),
+      createdAt: new Date('2018-12-25'),
+      quantity: 2,
+      paid: 25,
+      RecipeId: 1,
+      UserId: 0
+      },
+      {
+      expectedDelivery: new Date('2019-02-02'),
+      deliveredOn: new Date('2019-02-12'),
+      createdAt: new Date('2019-02-01'),
+      quantity: 1,
+      paid: 12.99,
+      RecipeId: 2,
+      UserId: 0
+      },
+      {
+      expectedDelivery: new Date('2019-06-16'),
+      createdAt: new Date('2019-06-06'),
+      quantity: 3,
+      paid: 39.99,
+      RecipeId: 1,
+      UserId: 0
+      },
+    ],
+    faves: [
+      {
+        RecipeId: 1,
+        UserId: 0
+      },
+      {
+        RecipeId: 2,
+        UserId: 0
+      },
+    ]
+  },
+  {
+    name: 'Bo Jangles',
+    email: 'b@b.com',
+    password: '1234',
+    street1: '34 B Ave.',
+    street2: 'Ste. 45',
+    city: 'Berkeley',
+    state: 'CA',
+    postalCode: '94704',
+    orders: [
+      {
+      expectedDelivery: new Date('2019-05-12'),
+      deliveredOn: new Date('2019-05-16'),
+      createdAt: new Date('2019-05-10'),
+      quantity: 4,
+      paid: 62.99,
+      RecipeId: 2,
+      UserId: 0
+      },
+      {
+      expectedDelivery: new Date('2019-06-16'),
+      createdAt: new Date('2019-06-07'),
+      quantity: 1,
+      paid: 12.99,
+      RecipeId: 2,
+      UserId: 0
+      },
+    ],
+    faves: [
+      {
+        RecipeId: 2,
+        UserId: 0
+      },
+    ]
+  }
+]
 const seedDatabase = async () => {
   try {
     const db = createModels(sequelizeConfig);
@@ -294,6 +379,7 @@ const seedDatabase = async () => {
 
 
     // Create Ingredients
+    console.log('\n######## creating INGREDIENTS #########')
     for (let ingredient of ingredientsData) {
       await db.Ingredient.create(ingredient);
     }
@@ -301,6 +387,7 @@ const seedDatabase = async () => {
     console.log(`Created ${ingredientsData.length} ingredients`);
 
     // Create Recipes
+    console.log('\n######## creating RECIPES #########')
     for (let recipe of recipesData) {
       let newRecipe = await db.Recipe.create(recipe);
       for (let step of recipeStepsData[newRecipe.id]) {
@@ -312,35 +399,33 @@ const seedDatabase = async () => {
         await db.RecIng.create(recIng);
       }
       console.log(`Created recipe: ${newRecipe.name} with ${recipeStepsData[newRecipe.id].length} steps and ${recipeIngredientData[newRecipe.id].length} ingredients `);
-
     }
     console.log(`Created ${recipesData.length} recipes`);
 
-
-
-  // // Hash User Passwords
-  // for (const user in usersData) {
-  //   const hashedPassword = bcrypt.hashSync(usersData[user].password, 10);
-  //   usersData[user].password = hashedPassword;
-  // }
-  // console.log('User passwords hashed...');
-
-  //   // Associate Users/Cities/Posts
-  //   console.log('Associating models...');
-  //
-  //   const randomIndex = arr => Math.floor(Math.random() * arr.length);
-  //
-  //   for (const post in newPosts) {
-  //     console.log('Random Index = ', randomIndex(newPosts));
-  //
-  //     newPosts[post].user_id = newUsers[randomIndex(newUsers)];
-  //     newPosts[post].city_id = newCities[randomIndex(newCities)];
-  //
-  //     // Save Post
-  //     await newPosts[post].save();
-  // }
-  //
-  //   console.log('Users, cities, and posts successfully associated');
+    // create Users, Purchases and Faves
+    console.log('\n######## creating USERS #########')
+    for (let user of usersData) {
+      const userTmp = {
+        name: user.name,
+        email: user.email,
+        password: bcrypt.hashSync(user.password, 10),
+        street1: user.street1,
+        city: user.city,
+        state: user.state,
+        postalCode: user.postalCode
+      }
+      let newUser = await db.User.create(userTmp);
+      for (let order of user.orders) {
+        order.UserId = newUser.id;
+        await db.Purchase.create(order);
+      }
+      for (let fave of user.faves) {
+        fave.UserId = newUser.id;
+        await db.Fave.create(fave);
+      }
+      console.log(`Created user: ${newUser.name} with ${user.orders.length} orders and ${user.faves.length} faves `);
+    }
+    console.log(`Created ${usersData.length} users`);
 
     console.log('Exiting...');
     process.exit();

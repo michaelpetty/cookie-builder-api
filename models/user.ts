@@ -1,5 +1,7 @@
 import * as Sequelize from 'sequelize';
 import { SequelizeAttributes } from 'typings/SequelizeAttributes';
+import { PurchaseAttributes, PurchaseInstance } from 'models/purchase';
+import { FaveAttributes, FaveInstance } from 'models/fave';
 
 export interface UserAttributes {
   id?: number;
@@ -16,7 +18,12 @@ export interface UserAttributes {
   updatedAt?: Date;
 }
 
-export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {}
+export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {
+  getPurchases: Sequelize.HasManyGetAssociationsMixin<PurchaseInstance>;
+  setPurchases: Sequelize.HasManySetAssociationsMixin<PurchaseInstance, PurchaseInstance['id']>;
+  getFaves: Sequelize.HasManyGetAssociationsMixin<FaveInstance>;
+  setFaves: Sequelize.HasManySetAssociationsMixin<FaveInstance, FaveInstance['id']>;
+}
 
 export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<UserInstance, UserAttributes> => {
   const attributes: SequelizeAttributes<UserAttributes> = {
@@ -83,6 +90,11 @@ export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize
   }
 
   const User = sequelize.define<UserInstance, UserAttributes>('User', attributes);
+
+  User.associate = models => {
+    User.hasMany(models.Purchase);
+    User.hasMany(models.Fave);
+  }
 
   return User;
 }
