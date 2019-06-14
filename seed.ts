@@ -47,6 +47,12 @@ const ingredientsData = [
   {
     name: "raisins",
     popularity: 4
+  },
+  {
+    name: "dark brown sugar",
+  },
+  {
+    name: "dark corn syrup"
   }
 ]
 
@@ -78,6 +84,20 @@ const recipesData = [
     note: "Variations: Stir in 1 cup chopped nuts. Substitute 1 cup semisweet chocolate chips or candy-coated chocolate pieces for raisins; omit cinnamon. Substitute 1 cup diced dried mixed fruit.",
     source: "Quaker Oats",
     sourceURL: "https://www.quakeroats.com/cooking-and-recipe/vanishing-oatmeal-raisin-cookies/"
+  },
+  //recipe 3
+  {
+    name: "Peanut Butter Cookies with Chocolate Chips",
+    picture: "https://www.quakeroats.com/images/default-source/RecipeModule/vanishing-oatmeal-raisin-cookies-related-recipe.jpg?sfvrsn=82e83652_0",
+    price: 16.99,
+    yield: "Makes about 2 dozen",
+    activeTime: "",
+    totalTime: "",
+    preheat: "350",
+    intro: "",
+    note: "",
+    source: "Bon Appétit",
+    sourceURL: "https://www.epicurious.com/recipes/food/views/peanut-butter-cookies-with-milk-chocolate-chunks-4518"
   }
 ]
 
@@ -152,6 +172,37 @@ const recipeStepsData = [
   },
   {
     body: "Cool 1 minute on cookie sheets; remove to wire rack. Cool completely. Store tightly covered.",
+    stepOrder: 6,
+    RecipeId: 0
+  }],
+  //recipe 3
+  [{
+    body: "Butter 2 large baking sheets.",
+    stepOrder: 1,
+    RecipeId: 0
+  },
+  {
+    body: "Using electric mixer, beat first 7 ingredients in large bowl until fluffy.",
+    stepOrder: 2,
+    RecipeId: 0
+  },
+  {
+    body: "Mix flour, oats and baking soda in small bowl. Add to peanut butter mixture; beat to blend.",
+    stepOrder: 3,
+    RecipeId: 0
+  },
+  {
+    body: "Stir in nuts and chocolate chips by hand.",
+    stepOrder: 4,
+    RecipeId: 0
+  },
+  {
+    body: "For each cookie, drop 1 slightly rounded tablespoon dough onto prepared sheet and top each with second slightly rounded tablespoon dough, pressing slightly. Freeze 10 minutes.",
+    stepOrder: 5,
+    RecipeId: 0
+  },
+  {
+    body: "Bake until cookies are light golden, about 15 minutes. Transfer to racks; cool.",
     stepOrder: 6,
     RecipeId: 0
   }],
@@ -284,6 +335,76 @@ const recipeIngredientData = [
     recIngOrder: 11,
     amount: '1',
     unit: 'cup'
+  }],
+  //recipe 3 ingredients
+  [{
+    RecipeId: 0,
+    IngredientId: 11,
+    recIngOrder: 1,
+    amount: '1',
+    preparation: 'chunky',
+    unit: 'cup'
+  },
+  {
+    RecipeId: 0,
+    IngredientId: 14,
+    recIngOrder: 2,
+    amount: '10',
+    unit: 'tbl.'
+  },{
+    RecipeId: 0,
+    IngredientId: 5,
+    recIngOrder: 3,
+    amount: '1/2',
+    unit: 'cup'
+  },{
+    RecipeId: 0,
+    IngredientId: 4,
+    recIngOrder: 4,
+    amount: '6',
+    unit: 'tbl.',
+    preparation: 'unsalted, room temperature'
+  },{
+    RecipeId: 0,
+    IngredientId: 15,
+    recIngOrder: 5,
+    amount: '2',
+    unit: 'tbl.'
+  },{
+    RecipeId: 0,
+    IngredientId: 7,
+    recIngOrder: 6,
+    amount: '1',
+  },{
+    RecipeId: 0,
+    IngredientId: 8,
+    recIngOrder: 7,
+    amount: '2',
+    unit: 'tsp.'
+  },{
+    RecipeId: 0,
+    IngredientId: 1,
+    recIngOrder: 8,
+    amount: '1',
+    unit: 'cup'
+  },{
+    RecipeId: 0,
+    IngredientId: 10,
+    recIngOrder: 9,
+    amount: '1/4',
+    unit: 'cup'
+  },{
+    RecipeId: 0,
+    IngredientId: 2,
+    recIngOrder: 10,
+    amount: '1',
+    unit: 'tsp.'
+  },{
+    RecipeId: 0,
+    IngredientId: 9,
+    recIngOrder: 11,
+    amount: '9',
+    unit: 'ounces'
   }]
 ]
 
