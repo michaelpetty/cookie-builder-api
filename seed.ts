@@ -72,7 +72,7 @@ const recipesData = [
   //recipe 1
   {
     name: "Toll house Chocolate Chip",
-    picture: "https://www.diningandcooking.com/wp-content/uploads/2018/03/Toll-House-Chocolate-Chip-Cookies-2.jpg",
+    picture: "/i/c/chocolate-chip.jpg",
     price: 12.99,
     yield: "Makes about 5 dozen",
     activeTime: "15 minutes",
@@ -86,7 +86,7 @@ const recipesData = [
   //recipe 2
   {
     name: "Vanishing Oatmeal Raisin",
-    picture: "https://www.quakeroats.com/images/default-source/RecipeModule/vanishing-oatmeal-raisin-cookies-related-recipe.jpg?sfvrsn=82e83652_0",
+    picture: "/i/c/oatmeal-raisin.jpg",
     price: 15.99,
     yield: "4 dozen",
     activeTime: "15 minutes",
@@ -100,7 +100,7 @@ const recipesData = [
   //recipe 3
   {
     name: "Peanut Butter Cookies with Chocolate Chips",
-    picture: "https://www.quakeroats.com/images/default-source/RecipeModule/vanishing-oatmeal-raisin-cookies-related-recipe.jpg?sfvrsn=82e83652_0",
+    picture: "/i/c/pb-chocolate-chip.jpg",
     price: 16.99,
     yield: "Makes about 2 dozen",
     activeTime: "",
@@ -114,7 +114,7 @@ const recipesData = [
   //recipe 4
   {
     name: "Peanut Butter Cookies",
-    picture: "https://www.quakeroats.com/images/default-source/RecipeModule/vanishing-oatmeal-raisin-cookies-related-recipe.jpg?sfvrsn=82e83652_0",
+    picture: "/i/c/peanut-butter.jpg",
     price: 15.49,
     yield: "Makes about 36",
     activeTime: "20 minutes",
@@ -128,7 +128,7 @@ const recipesData = [
   //recipe 5
   {
     name: "Earthquake Cookies",
-    picture: "http://www.ouichefnetwork.com/images/old/6a01156ed76240970c012877956969970c-pi.jpg",
+    picture: "/i/c/earthquake.jpg",
     price: 17.49,
     yield: "About 40 cookies",
     activeTime: "",
