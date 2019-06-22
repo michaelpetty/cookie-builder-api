@@ -285,7 +285,8 @@ app.get('/auth/user/faves', async (req: RequestPlus, res: Response) => {
 
 app.post('/auth/user/faves/:recipeId', async (req: RequestPlus, res: Response) => {
   if (req.userId) {
-    res.json(await db.Fave.create({RecipeId: req.params.recipeId, UserId: req.userId}));
+    await db.Fave.create({RecipeId: req.params.recipeId, UserId: req.userId});
+    res.json(await db.Fave.findAll({where: {UserId: req.userId}, include: [{model: db.Recipe}]}));
   } else {
     res.json('No user Id provided');
   }
