@@ -71,7 +71,7 @@ const ingredientsData = [
 const recipesData = [
   //recipe 1
   {
-    name: "Toll house Chocolate Chip",
+    name: "Toll House Chocolate Chip",
     picture: "/i/c/chocolate-chip.jpg",
     price: 12.99,
     yield: "Makes about 5 dozen",
@@ -99,7 +99,7 @@ const recipesData = [
   },
   //recipe 3
   {
-    name: "Peanut Butter Cookies with Chocolate Chips",
+    name: "Peanut Butter Chocolate Chip",
     picture: "/i/c/pb-chocolate-chip.jpg",
     price: 16.99,
     yield: "Makes about 2 dozen",
