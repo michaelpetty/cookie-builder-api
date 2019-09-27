@@ -4,6 +4,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import nodemailer from 'nodemailer';
+import validator from 'validator';
 import { createModels } from './models';
 import { RecipeInstance } from  'models/recipe';
 import { RecipeStepInstance } from  'models/recipestep';
@@ -92,6 +94,49 @@ app.get('/api/v1/recipes/:id/full', async (req: Request, res: Response) => {
 app.get('/api/v1/recipes/:id/steps', (req: Request, res: Response) => {
   db.RecipeStep.findAll({where:{RecipeId: req.params.id}})
     .then((recipesteps: RecipeStepInstance[]) => res.json(recipesteps))
+})
+
+// Email message sender
+// initial email test
+app.post('/msg/send-email', (req: Request, res: Response) => {
+  //create the transport
+  const transport = nodemailer.createTransport({
+    host: 'smtp.mailtrap.io',
+    port: 2525,
+    auth: {
+      user: '220c107d93bb32',
+      pass: 'e8e21ea5123ea2'
+    }
+  })
+
+  //validate email and sanitize content
+  let fromName = req.body.fromName;
+  let fromEmail = req.body.fromEmail || '';
+  let subject = req.body.subject;
+  let message = req.body.message;
+  const whiteRegEx = 'a-zA-Z0-9\\.\\?,;:\\!@#\\$%\\^&\\-\\*_=\\+\\(\\)\\\'\\"  ';
+  if (validator.isEmail(fromEmail)) {
+    //what's the message
+    const messageObj = {
+      from: fromEmail,
+      to: 'mp@test.com',
+      subject: validator.whitelist(subject, whiteRegEx),
+      text: validator.whitelist(message, whiteRegEx)
+    }
+    //send message via transport
+    transport.sendMail(messageObj, (err, info) => {
+      if (err) {
+        return console.log(`error: ${err}`);
+      }
+      console.log(`Message sent. ${info.response}`);
+      res.status(200).json(info);
+    })
+
+
+  } else {
+    res.status(422).json({status: 422, error: 'invalid email'});
+  }
+
 })
 
 // AUTH

@@ -30,7 +30,11 @@
       "express",
       "sequelize",
       "body-parser",
-      "pg"
+      "pg",
+      "nodemailer",
+      "nodemailer-direct-transport",
+      "nodemailer-smtp-transport",
+      "validator"
     ],
     "typeRoots": [
       "node_modules/@types"
