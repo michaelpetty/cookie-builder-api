@@ -34,7 +34,8 @@
       "nodemailer",
       "nodemailer-direct-transport",
       "nodemailer-smtp-transport",
-      "validator"
+      "validator",
+      "dotenv"
     ],
     "typeRoots": [
       "node_modules/@types"
