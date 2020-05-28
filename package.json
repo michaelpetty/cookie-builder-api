@@ -30,7 +30,7 @@
     "nodemailer": "^6.3.0",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.38.0",
+    "sequelize": "^5.15.1",
     "sqlite3": "^4.2.0",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
