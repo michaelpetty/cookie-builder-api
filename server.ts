@@ -8,16 +8,12 @@ import apiCtrl from './controllers/apiController';
 import authCtrl from './controllers/authController';
 import msgCtrl from './controllers/msgController';
 
-const sequelizeConfig = require('./config/sequelizeConfig.json');
+const sequelizeConfig = require(__dirname + '/config/sequelizeConfig.js');
 const PORT = process.env.CB_API_EXPRESS_PORT || 4000;
 
 const app: express.Application = express();
 
 const db = createModels(sequelizeConfig);
-// db.sequelize.sync({force: true})
-//   .then(() => {
-//     console.log('Database and tables created');
-//   })
 
 app.set('DB', db);
 

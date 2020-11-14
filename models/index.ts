@@ -9,12 +9,8 @@ import { PurchaseFactory } from './purchase';
 import { FaveFactory } from './fave';
 
 export const createModels = (sequelizeConfig: any): DbInterface => {
-  // const { database, username, password, params } = sequelizeConfig;
-  // const sequelize = new Sequelize(database, username, password, params);
-  const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './db.development.sqlite'
-  })
+  const { database, username, password, params } = sequelizeConfig;
+  const sequelize = new Sequelize(database, username, password, params);
 
   const db: DbInterface = {
     sequelize,

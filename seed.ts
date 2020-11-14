@@ -1,8 +1,9 @@
 import bcrypt from 'bcrypt';
+import './config/env';
 import { createModels } from './models';
 import { RecipeInstance } from  'models/recipe';
 import { IngredientInstance } from 'models/ingredient';
-const sequelizeConfig = require('./config/sequelizeConfig.json');
+const sequelizeConfig = require(__dirname + '/config/sequelizeConfig.js');
 
 const ingredientsData = [
   {
@@ -304,13 +305,23 @@ const recipeStepsData = [
     RecipeId: 0
   },
   {
-    body: "Soft some powdered sugar into a bowl and pour some granulated sugar into another. Roll the cookie dough into 1-inch balls. First toss a few of the unbaked cookies in the granulated sugar to coat them, then roll them in the powdered sugar, coating them completely. Set the sugared cookies on a parchment lined baking sheet at least 1 inch apart. Continue to roll all the remaining cookies in both sugars.",
+    body: "Sift some powdered sugar into a bowl and pour some granulated sugar into another. Roll dough into 1-inch balls. Toss a few of the unbaked cookies in the granulated sugar to coat them, then roll them in the powdered sugar, coating them completely.",
     stepOrder: 6,
     RecipeId: 0
   },
   {
-    body: "Bake the cookies for 12 to 14 minutes, rotating the baking sheet midway through baking. They are done when they are just slightly firm at the edges but still quite soft near the center. They should slide on the baking sheet when you nudge them with your finger. Do not overbake them. Once they have cooled, store the cookies in an airtight container.",
+    body: "Set the sugared cookies on a parchment lined baking sheet at least 1 inch apart. Continue to roll all the remaining cookies in both sugars.",
     stepOrder: 7,
+    RecipeId: 0
+  },
+  {
+    body: "Bake the cookies for 12 to 14 minutes, rotating the baking sheet midway through baking. They are done when they are just slightly firm at the edges but still quite soft near the center. Do not overbake them.",
+    stepOrder: 8,
+    RecipeId: 0
+  },
+  {
+    body: "Once they have cooled, store the cookies in an airtight container.",
+    stepOrder: 9,
     RecipeId: 0
   }],
 ]
