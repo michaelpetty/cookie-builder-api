@@ -7,7 +7,8 @@ const sequelizeConfig = require(__dirname + '/config/sequelizeConfig.js');
 
 const ingredientsData = [
   {
-    name: "all-purpose flower"
+    name: "all-purpose flower",
+    popularity: 5
   },
   {
     name: "baking soda"
