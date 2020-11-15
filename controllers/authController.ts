@@ -89,6 +89,7 @@ router.post('/user/login', (req: Request, res: Response) => {
             },
             async (err, signedJwt) => {
               const faves = await db.Fave.findAll({where: {UserId: user.id}, include: [{model: db.Recipe}]});
+              user.password = '';
               res.status(200).json({
                 message: 'Auth successful',
                 userJWT,
@@ -146,7 +147,7 @@ router.use('/user', (req: RequestPlus, res: Response, next: NextFunction) => {
 router.get('/user', (req: RequestPlus, res: Response) => {
   const db = req.app.get('DB');
   if (req.userId) {
-    db.User.findByPk(req.userId)
+    db.User.findByPk(req.userId, {attributes: {exclude: ['password']}})
       .then((foundUser: UserInstance) => {
         res.json(foundUser);
       })
@@ -158,7 +159,7 @@ router.get('/user', (req: RequestPlus, res: Response) => {
 router.get('/user/full', async (req: RequestPlus, res: Response) => {
   const db = req.app.get('DB');
   if (req.userId) {
-    const user = await db.User.findByPk(req.userId);
+    const user = await db.User.findByPk(req.userId, {attributes: {exclude: ['password']}});
     const faves = await db.Fave.findAll({where: {UserId: req.userId}, include: [{model: db.Recipe}]});
     res.json({user: user, faves: faves});
   } else {
