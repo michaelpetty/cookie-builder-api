@@ -1,27 +1,40 @@
-import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'typings/SequelizeAttributes';
-import { RecipeAttributes, RecipeInstance } from 'models/recipe'
-import { UserAttributes, UserInstance } from 'models/user'
+import { Sequelize, Model, DataTypes } from 'sequelize';
+import { BelongsToGetAssociationMixin, Association } from 'sequelize';
 
-export interface PurchaseAttributes {
-  id?: number;
-  expectedDelivery: Date;
-  deliveredOn?: Date;
-  quantity: number;
-  paid: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  RecipeId: RecipeAttributes | RecipeAttributes['id'];
-  UserId: UserAttributes | UserAttributes['id'];
+import { Recipe } from './recipe'
+// import { User } from './user'
+import { DbInterface } from '../typings/DbInterface';
+
+export class Purchase extends Model {
+  public id!: number;
+  public expectedDelivery!: Date;
+  public deliveredOn?: Date;
+  public quantity!: number;
+  public paid!: number;
+  public RecipeId!: Recipe['id'];
+  // public UserId!: User['id'];
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  public static associate(models: DbInterface): void {};
+
+  // public getUser: BelongsToGetAssociationMixin<User>
+  public getRecipe: BelongsToGetAssociationMixin<Recipe>
+
+ public static associations: {
+   recipe: Association<Recipe>;
+   // user: Association<User>;
+ }
 }
 
-export interface PurchaseInstance extends Sequelize.Instance<PurchaseAttributes>, PurchaseAttributes {
-  getRecipe: Sequelize.BelongsToGetAssociationMixin<RecipeInstance>;
-  getUser: Sequelize.BelongsToGetAssociationMixin<UserInstance>;
-}
-
-export const PurchaseFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<PurchaseInstance, PurchaseAttributes> => {
-  const attributes: SequelizeAttributes<PurchaseAttributes> = {
+export const PurchaseFactory = (sequelize: Sequelize) => {
+  Purchase.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     RecipeId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -53,13 +66,14 @@ export const PurchaseFactory = (sequelize: Sequelize.Sequelize, DataTypes: Seque
       type: DataTypes.INTEGER,
       allowNull: false
     }
-  }
+  }, {
+    sequelize,
+    tableName: 'Purchases'
+  })
 
-  const Purchase = sequelize.define<PurchaseInstance, PurchaseAttributes>('Purchase', attributes);
-
-  Purchase.associate = models => {
+  Purchase.associate = (models: DbInterface) => {
     Purchase.belongsTo(models.Recipe);
-    Purchase.belongsTo(models.User);
+    // Purchase.belongsTo(models.User);
   }
 
   return Purchase;

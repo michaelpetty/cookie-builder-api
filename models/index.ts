@@ -23,9 +23,9 @@ export const createModels = (sequelizeConfig: any): DbInterface => {
     RecipeStep: RecipeStepFactory(sequelize),
     RecIng: RecIngFactory(sequelize),
     Ingredient: IngredientFactory(sequelize),
-    // User: UserFactory(sequelize, Sequelize),
-    // Purchase: PurchaseFactory(sequelize, Sequelize),
-    // Fave: FaveFactory(sequelize, Sequelize)
+    User: UserFactory(sequelize),
+    Purchase: PurchaseFactory(sequelize),
+    Fave: FaveFactory(sequelize)
   }
 
   Object.keys(db).forEach(modelName => {

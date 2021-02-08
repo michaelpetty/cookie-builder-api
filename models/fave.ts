@@ -1,23 +1,38 @@
-import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'typings/SequelizeAttributes';
-import { RecipeAttributes, RecipeInstance } from 'models/recipe'
-import { UserAttributes, UserInstance } from 'models/user'
+import { Sequelize, Model, DataTypes } from 'sequelize';
+import { BelongsToGetAssociationMixin, Association } from 'sequelize';
 
-export interface FaveAttributes {
-  id?: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  RecipeId: RecipeAttributes | RecipeAttributes['id'];
-  UserId: UserAttributes | UserAttributes['id'];
+import { Recipe } from './recipe'
+// import { User } from './user'
+import { DbInterface } from '../typings/DbInterface';
+
+
+export class Fave extends Model {
+  public id!: number;
+  public RecipeId!: Recipe['id'];
+  // public UserId: User['id'];
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  public static associate(models: DbInterface): void {};
+
+  public getRecipe: BelongsToGetAssociationMixin<Recipe>;
+  // public getUser: BelongsToGetAssociationMixin<User>;
+
+ public static associations: {
+   recipe: Association<Recipe>;
+   // user: Association<User>;
+ }
+
 }
 
-export interface FaveInstance extends Sequelize.Instance<FaveAttributes>, FaveAttributes {
-  getRecipe: Sequelize.BelongsToGetAssociationMixin<RecipeInstance>;
-  getUser: Sequelize.BelongsToGetAssociationMixin<UserInstance>;
-}
-
-export const FaveFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<FaveInstance, FaveAttributes> => {
-  const attributes: SequelizeAttributes<FaveAttributes> = {
+export const FaveFactory = (sequelize: Sequelize) => {
+  Fave.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     RecipeId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -34,13 +49,15 @@ export const FaveFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize
         key: 'id'
       }
     }
-  }
+  }, {
+    sequelize,
+    tableName: 'Faves'
+  })
 
-  const Fave = sequelize.define<FaveInstance, FaveAttributes>('Fave', attributes);
 
-  Fave.associate = models => {
+  Fave.associate = (models: DbInterface) => {
     Fave.belongsTo(models.Recipe);
-    Fave.belongsTo(models.User);
+    // Fave.belongsTo(models.User);
   }
 
   return Fave;

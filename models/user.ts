@@ -1,35 +1,49 @@
-import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'typings/SequelizeAttributes';
-import { PurchaseAttributes, PurchaseInstance } from 'models/purchase';
-import { FaveAttributes, FaveInstance } from 'models/fave';
+import { Sequelize, Model, DataTypes } from 'sequelize';
+import { HasManyGetAssociationsMixin, HasManySetAssociationsMixin, Association } from 'sequelize';
 
-export interface UserAttributes {
-  id?: number;
-  name: string;
-  email: string;
-  password: string;
-  password2?: string;
-  street1: string;
-  street2?: string;
-  city: string;
-  state: string;
-  postalCode: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+import { Purchase } from './purchase';
+import { Fave } from './fave';
+import { DbInterface } from '../typings/DbInterface';
+
+
+export class User extends Model {
+  public id!: number;
+  public name?: string;
+  public email!: string;
+  public password!: string;
+  public password2?: string;
+  public street1?: string;
+  public street2?: string;
+  public city?: string;
+  public state?: string;
+  public postalCode?: string;
+
+  public readonly createdAt?: Date;
+  public readonly updatedAt?: Date;
+
+  public getPurchases: HasManyGetAssociationsMixin<Purchase>;
+  public setPurchase: HasManySetAssociationsMixin<Purchase, Purchase['id']>;
+  public getFaves: HasManyGetAssociationsMixin<Fave>;
+  public setFave: HasManySetAssociationsMixin<Fave, Fave['id']>;
+
+  public static associate(models: DbInterface): void {};
+
+  public static associations: {
+    purchases: Association<User, Purchase>;
+    faves: Association<User, Fave>;
+  }
 }
 
-export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {
-  getPurchases: Sequelize.HasManyGetAssociationsMixin<PurchaseInstance>;
-  setPurchases: Sequelize.HasManySetAssociationsMixin<PurchaseInstance, PurchaseInstance['id']>;
-  getFaves: Sequelize.HasManyGetAssociationsMixin<FaveInstance>;
-  setFaves: Sequelize.HasManySetAssociationsMixin<FaveInstance, FaveInstance['id']>;
-}
-
-export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<UserInstance, UserAttributes> => {
-  const attributes: SequelizeAttributes<UserAttributes> = {
+export const UserFactory = (sequelize: Sequelize) => {
+  User.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     name: {
       type: DataTypes.STRING(40),
-      allowNull: false,
+      allowNull: true,
       validate: {
         is: /^[a-z ,\.]+$/i,
         len: [2,40]
@@ -50,7 +64,7 @@ export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize
     },
     street1: {
       type: DataTypes.STRING(40),
-      allowNull: false,
+      allowNull: true,
       validate: {
         is: /^[a-z0-9 ,\.#]+$/i,
         len: [2,40]
@@ -66,7 +80,7 @@ export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize
     },
     city: {
       type: DataTypes.STRING(40),
-      allowNull: false,
+      allowNull: true,
       validate: {
         is: /^[a-z ]+$/i,
         len: [2,40]
@@ -74,7 +88,7 @@ export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize
     },
     state: {
       type: DataTypes.STRING(40),
-      allowNull: false,
+      allowNull: true,
       validate: {
         is: /^[a-z ]+$/i,
         len: [2,40]
@@ -82,16 +96,17 @@ export const UserFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize
     },
     postalCode: {
       type: DataTypes.STRING(20),
-      allowNull: false,
+      allowNull: true,
       validate: {
         is: /^[a-z0-9]+(-[a-z0-9]+)?$/i
       }
     }
-  }
+  }, {
+    sequelize,
+    tableName: 'Users'
+  })
 
-  const User = sequelize.define<UserInstance, UserAttributes>('User', attributes);
-
-  User.associate = models => {
+  User.associate = (models: DbInterface) => {
     User.hasMany(models.Purchase);
     User.hasMany(models.Fave);
   }

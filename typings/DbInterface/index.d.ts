@@ -14,7 +14,7 @@ export interface DbInterface {
   RecipeStep: Sequelize.Model<RecipeStepInstance, RecipeStepAttributes>;
   RecIng: Sequelize.Model<RecIngInstance, RecIngAttributes>;
   Ingredient: Sequelize.Model<IngredientInstance, IngredientAttributes>;
-  // User: Sequelize.Model<UserInstance, UserAttributes>;
-  // Purchase: Sequelize.Model<PurchaseInstance, PurchaseAttributes>;
-  // Fave: Sequelize.Model<FaveInstance, FaveAttributes>;
+  User: Sequelize.Model<UserInstance, UserAttributes>;
+  Purchase: Sequelize.Model<PurchaseInstance, PurchaseAttributes>;
+  Fave: Sequelize.Model<FaveInstance, FaveAttributes>;
 }
