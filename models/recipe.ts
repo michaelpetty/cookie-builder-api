@@ -1,36 +1,51 @@
-import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'typings/SequelizeAttributes';
-import { RecipeStepAttributes, RecipeStepInstance } from 'models/recipestep';
-import { RecIngAttributes, RecIngInstance } from 'models/recipeingredient';
+import { Sequelize, Model, DataTypes } from 'sequelize';
+import { HasManyGetAssociationsMixin, HasManySetAssociationsMixin, Association } from 'sequelize';
 
-export interface RecipeAttributes {
-  id?: number;
-  name: string;
-  picture: string;
-  price: number;
-  yield: string;
-  activeTime: string;
-  totalTime: string;
-  preheat: string;
-  intro: string;
-  note: string;
-  source: string;
-  sourceURL: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  RecipeStep?: RecipeStepAttributes[] | RecipeStepAttributes['id'][];
-  RecIng?: RecIngAttributes[] | RecIngAttributes['id'][];
+import { RecipeStep } from './recipestep';
+import { RecIng } from './recipeingredient';
+import { DbInterface } from '../typings/DbInterface';
+
+
+export class Recipe extends Model {
+  public id!: number;
+  public name!: string;
+  public picture!: string;
+  public price!: number;
+  public yield!: string;
+  public activeTime!: string;
+  public totalTime!: string;
+  public preheat!: string;
+  public intro!: string;
+  public note!: string;
+  public source!: string;
+  public sourceURL!: string;
+  public RecipeStep!: RecipeStep['id'][];
+  public RecIng!: RecIng['id'][];
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  public getRecIngs: HasManyGetAssociationsMixin<RecIng>;
+  public setRecIngs: HasManySetAssociationsMixin<RecIng, RecIng['id']>;
+  public getRecipeSteps: HasManyGetAssociationsMixin<RecipeStep>;
+  public setRecipeSteps: HasManySetAssociationsMixin<RecipeStep, RecipeStep['id']>;
+
+  public static associate(models: DbInterface): void {};
+
+  public static associations: {
+    recIngs: Association<Recipe, RecIng>;
+    recipeSteps: Association<Recipe, RecipeStep>;
+  }
+
 }
 
-export interface RecipeInstance extends Sequelize.Instance<RecipeAttributes>, RecipeAttributes {
-  getRecipeSteps: Sequelize.HasManyGetAssociationsMixin<RecipeStepInstance>;
-  setRecipeSteps: Sequelize.HasManySetAssociationsMixin<RecipeStepInstance, RecipeStepInstance['id']>;
-  getRecIngs: Sequelize.HasManyGetAssociationsMixin<RecIngInstance>;
-  setRecIngs: Sequelize.HasManySetAssociationsMixin<RecIngInstance, RecIngInstance['id']>;
-}
-
-export const RecipeFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<RecipeInstance, RecipeAttributes> => {
-  const attributes: SequelizeAttributes<RecipeAttributes> = {
+export const RecipeFactory = (sequelize: Sequelize) => {
+  Recipe.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     name: {
       type: DataTypes.STRING,
       unique: true,
@@ -67,13 +82,22 @@ export const RecipeFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequeli
     sourceURL: {
       type: DataTypes.STRING(1234)
     }
-  }
+  }, {
+    sequelize,
+    tableName: 'Recipes'
+  })
 
-  const Recipe = sequelize.define<RecipeInstance, RecipeAttributes>('Recipe', attributes);
-
-  Recipe.associate = models => {
-    Recipe.hasMany(models.RecipeStep);
-    Recipe.hasMany(models.RecIng);
+  Recipe.associate = (models: DbInterface) => {
+    Recipe.hasMany(models.RecipeStep, {
+      sourceKey: 'id',
+      foreignKey: 'RecipeId',
+      as: 'recipeSteps'
+    });
+    Recipe.hasMany(models.RecIng, {
+      sourceKey: 'id',
+      foreignKey: 'RecipeId',
+      as: 'recIngs'
+    });
   }
 
   return Recipe;

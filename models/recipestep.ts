@@ -1,23 +1,35 @@
-import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'typings/SequelizeAttributes';
-import { RecipeAttributes, RecipeInstance } from 'models/recipe'
+import { Sequelize, Model, DataTypes } from 'sequelize';
+import { BelongsToGetAssociationMixin, BelongsToSetAssociationMixin, Association } from 'sequelize';
 
-export interface RecipeStepAttributes {
-  id?: number;
-  body: string;
-  stepOrder: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  RecipeId: RecipeAttributes | RecipeAttributes['id'];
+import { Recipe } from './recipe'
+import { DbInterface } from '../typings/DbInterface';
+
+export class RecipeStep extends Model {
+  public id!: number;
+  public body!: string;
+  public stepOrder!: number;
+  public RecipeId!: Recipe['id'];
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  public static associate(models: DbInterface): void {};
+
+  public getRecipe: BelongsToGetAssociationMixin<Recipe>
+  public setRecipe: BelongsToSetAssociationMixin<Recipe, Recipe['id']>
+
+ public static associations: {
+   recipe: Association<Recipe>;
+ }
 }
 
-export interface RecipeStepInstance extends Sequelize.Instance<RecipeStepAttributes>, RecipeStepAttributes {
-  getRecipe: Sequelize.BelongsToGetAssociationMixin<RecipeInstance>;
-  setRecipe: Sequelize.BelongsToSetAssociationMixin<RecipeInstance, RecipeInstance['id']>;
-}
-
-export const RecipeStepFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<RecipeStepInstance, RecipeStepAttributes> => {
-  const attributes: SequelizeAttributes<RecipeStepAttributes> = {
+export const RecipeStepFactory = (sequelize: Sequelize) => {
+  RecipeStep.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     RecipeId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -36,11 +48,12 @@ export const RecipeStepFactory = (sequelize: Sequelize.Sequelize, DataTypes: Seq
       unique: 'recOrderIndex',
       allowNull: false
     }
-  }
+  }, {
+    sequelize,
+    tableName: 'RecipeSteps'
+  })
 
-  const RecipeStep = sequelize.define<RecipeStepInstance, RecipeStepAttributes>('RecipeStep', attributes);
-
-  RecipeStep.associate = models => {
+  RecipeStep.associate = (models: DbInterface) => {
     RecipeStep.belongsTo(models.Recipe);
   }
 

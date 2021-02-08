@@ -5,6 +5,5 @@ module.exports = {
   "params": {
     "host": process.env.DB_HOST,
     "dialect": "postgres",
-    "operatorsAliases": false
   }
 }

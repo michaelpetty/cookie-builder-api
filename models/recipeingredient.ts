@@ -1,27 +1,40 @@
-import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'typings/SequelizeAttributes';
-import { RecipeAttributes, RecipeInstance } from 'models/recipe'
-import { IngredientAttributes, IngredientInstance } from 'models/ingredient'
+import { Sequelize, Model, DataTypes } from 'sequelize';
+import { BelongsToGetAssociationMixin, Association } from 'sequelize';
 
-export interface RecIngAttributes {
-  id?: number;
-  recIngOrder: number;
-  preparation?: string;
-  amount: string;
-  unit?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  RecipeId: RecipeAttributes | RecipeAttributes['id'];
-  IngredientId: IngredientAttributes | IngredientAttributes['id'];
+import { Recipe } from './recipe'
+import { Ingredient } from './ingredient'
+import { DbInterface } from '../typings/DbInterface';
+
+export class RecIng extends Model {
+  public id!: number;
+  public recIngOrder!: number;
+  public preparation!: string | null;
+  public amount!: string;
+  public unit!: string | null;
+  public RecipeId!: Recipe['id'];
+  public IngredientId!: Ingredient['id'];
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+   public static associate(models: DbInterface): void {};
+
+   public getIngredient: BelongsToGetAssociationMixin<Ingredient>
+   public getRecipe: BelongsToGetAssociationMixin<Recipe>
+
+  public static associations: {
+    recipe: Association<Recipe>;
+    ingredient: Association<Ingredient>;
+  }
 }
 
-export interface RecIngInstance extends Sequelize.Instance<RecIngAttributes>, RecIngAttributes {
-  getRecipe: Sequelize.BelongsToGetAssociationMixin<RecipeInstance>;
-  getIngredient: Sequelize.BelongsToGetAssociationMixin<IngredientInstance>;
-}
-
-export const RecIngFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<RecIngInstance, RecIngAttributes> => {
-  const attributes: SequelizeAttributes<RecIngAttributes> = {
+export const RecIngFactory = (sequelize: Sequelize) => {
+  RecIng.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     RecipeId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -52,11 +65,12 @@ export const RecIngFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequeli
     unit: {
       type: DataTypes.STRING
     }
-  }
+  }, {
+    sequelize,
+    tableName: 'RecIngs'
+  })
 
-  const RecIng = sequelize.define<RecIngInstance, RecIngAttributes>('RecIng', attributes);
-
-  RecIng.associate = models => {
+  RecIng.associate = (models: DbInterface) => {
     RecIng.belongsTo(models.Recipe);
     RecIng.belongsTo(models.Ingredient);
   }

@@ -1,18 +1,21 @@
-import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from 'typings/SequelizeAttributes';
+import { Sequelize, Model, DataTypes } from 'sequelize';
 
-export interface IngredientAttributes {
-  id?: number;
-  name: string;
-  popularity?: number;
-  createdAt?: Date;
-  updatedAt?: Date;
+export class Ingredient extends Model {
+  public id!: number;
+  public name!: string;
+  public popularity!: number;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
 
-export interface IngredientInstance extends Sequelize.Instance<IngredientAttributes>, IngredientAttributes {}
-
-export const IngredientFactory = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes): Sequelize.Model<IngredientInstance, IngredientAttributes> => {
-  const attributes: SequelizeAttributes<IngredientAttributes> = {
+export const IngredientFactory = (sequelize: Sequelize) => {
+  Ingredient.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     name: {
       type: DataTypes.STRING,
       unique: true,
@@ -23,9 +26,10 @@ export const IngredientFactory = (sequelize: Sequelize.Sequelize, DataTypes: Seq
       allowNull: false,
       defaultValue: 100
     }
-  }
-
-  const Ingredient = sequelize.define<IngredientInstance, IngredientAttributes>('Ingredient', attributes);
+  }, {
+    sequelize,
+    tableName: 'Ingredients'
+  })
 
   return Ingredient;
 }
