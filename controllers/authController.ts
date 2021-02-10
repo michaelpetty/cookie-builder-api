@@ -22,32 +22,28 @@ router.post('/user/signup', (req: Request, res: Response) => {
         if (err) {
           res.status(200).json({ error: err });
         } else {
-          db.User.create({
-              email: req.body.email,
-              password: hash,
-              name: req.body.name,
-              street1: req.body.street1,
-              street2: req.body.steet2,
-              city: req.body.city,
-              state: req.body.state,
-              postalCode: req.body.postalCode
-            })
-            .then((newUser: User) => {
-              let user = {
-                email: newUser.email,
-                _id: newUser.id
+          req.body.password = hash;
+          db.User.create(req.body)
+            .then((user: User) => {
+              let userJWT = {
+                email: user.email,
+                _id: user.id
               }
 
               jwt.sign(
-                user,
+                userJWT,
                 'waffles',
                 {
                   expiresIn: '1h'
                 },
-                (err, signedJwt) => {
+                async (err, signedJwt) => {
+                  const faves = await db.Fave.findAll({where: {UserId: user.id}, include: [{model: db.Recipe}]});
+                  console.log(faves);
+
                   res.status(200).json({
                     message: 'User Created',
                     user,
+                    faves,
                     signedJwt
                   });
                 }
@@ -156,6 +152,17 @@ router.get('/user', (req: RequestPlus, res: Response) => {
     res.json('No user Id provided');
   }
 })
+
+// need an update for user
+// router.put
+// email: req.body.email,
+// password: hash,
+// name: req.body.name,
+// street1: req.body.street1,
+// street2: req.body.steet2,
+// city: req.body.city,
+// state: req.body.state,
+// postalCode: req.body.postalCode
 
 router.get('/user/full', async (req: RequestPlus, res: Response) => {
   const db = req.app.get('DB');
