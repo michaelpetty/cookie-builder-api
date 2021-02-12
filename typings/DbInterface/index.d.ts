@@ -1,4 +1,4 @@
-import * as Sequelize from 'sequelize';
+import { Sequelize } from 'sequelize';
 import { RecipeAttributes, RecipeInstance } from 'models/recipe';
 import { RecipeStepAttributes, RecipeStepInstance } from 'models/recipestep';
 import { RecIngAttributes, RecIngInstance } from 'models/recipeingredient';

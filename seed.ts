@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import './config/env';
 import { createModels } from './models';
-import { RecipeInstance } from  'models/recipe';
-import { IngredientInstance } from 'models/ingredient';
+import { Recipe } from  './models/recipe';
+import { Ingredient } from './models/ingredient';
 const sequelizeConfig = require(__dirname + '/config/sequelizeConfig.js');
 
 const ingredientsData = [
