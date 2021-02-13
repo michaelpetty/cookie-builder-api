@@ -3,7 +3,7 @@ import { HasManyGetAssociationsMixin, HasManySetAssociationsMixin, Association }
 
 import { RecipeStep } from './recipestep';
 import { RecIng } from './recipeingredient';
-import { DbInterface } from '../typings/DbInterface';
+// import { DbInterface } from '../typings/DbInterface';
 
 
 export class Recipe extends Model {
@@ -30,7 +30,7 @@ export class Recipe extends Model {
   public getRecipeSteps: HasManyGetAssociationsMixin<RecipeStep>;
   public setRecipeSteps: HasManySetAssociationsMixin<RecipeStep, RecipeStep['id']>;
 
-  public static associate(models: DbInterface): void {};
+  // public static associate(models: DbInterface): void {};
 
   public static associations: {
     recIngs: Association<Recipe, RecIng>;
@@ -87,18 +87,18 @@ export const RecipeFactory = (sequelize: Sequelize) => {
     tableName: 'Recipes'
   })
 
-  Recipe.associate = (models: DbInterface) => {
-    Recipe.hasMany(models.RecipeStep, {
-      sourceKey: 'id',
-      foreignKey: 'RecipeId',
-      as: 'recipeSteps'
-    });
-    Recipe.hasMany(models.RecIng, {
-      sourceKey: 'id',
-      foreignKey: 'RecipeId',
-      as: 'recIngs'
-    });
-  }
+  // Recipe.associate = (models: DbInterface) => {
+    // Recipe.hasMany(models.RecipeStep, {
+    //   sourceKey: 'id',
+    //   foreignKey: 'RecipeId',
+    //   as: 'recipeSteps'
+    // });
+    // Recipe.hasMany(models.RecIng, {
+    //   sourceKey: 'id',
+    //   foreignKey: 'RecipeId',
+    //   as: 'recIngs'
+    // });
+  // }
 
   return Recipe;
 }

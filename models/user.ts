@@ -3,7 +3,7 @@ import { HasManyGetAssociationsMixin, HasManySetAssociationsMixin, Association }
 
 import { Purchase } from './purchase';
 import { Fave } from './fave';
-import { DbInterface } from '../typings/DbInterface';
+// import { DbInterface } from '../typings/DbInterface';
 
 
 export class User extends Model {
@@ -26,7 +26,7 @@ export class User extends Model {
   public getFaves: HasManyGetAssociationsMixin<Fave>;
   public setFave: HasManySetAssociationsMixin<Fave, Fave['id']>;
 
-  public static associate(models: DbInterface): void {};
+  // public static associate(models: DbInterface): void {};
 
   public static associations: {
     purchases: Association<User, Purchase>;
@@ -106,10 +106,10 @@ export const UserFactory = (sequelize: Sequelize) => {
     tableName: 'Users'
   })
 
-  User.associate = (models: DbInterface) => {
-    User.hasMany(models.Purchase);
-    User.hasMany(models.Fave);
-  }
+  // User.associate = (models: DbInterface) => {
+    // User.hasMany(Purchase);
+    // User.hasMany(Fave);
+  // }
 
   return User;
 }

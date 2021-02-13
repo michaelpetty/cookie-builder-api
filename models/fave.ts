@@ -2,26 +2,26 @@ import { Sequelize, Model, DataTypes } from 'sequelize';
 import { BelongsToGetAssociationMixin, Association } from 'sequelize';
 
 import { Recipe } from './recipe'
-// import { User } from './user'
-import { DbInterface } from '../typings/DbInterface';
+import { User } from './user'
+// import { DbInterface } from '../typings/DbInterface';
 
 
 export class Fave extends Model {
   public id!: number;
   public RecipeId!: Recipe['id'];
-  // public UserId: User['id'];
+  public UserId: User['id'];
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
-  public static associate(models: DbInterface): void {};
+  // public static associate(models): void {};
 
   public getRecipe: BelongsToGetAssociationMixin<Recipe>;
-  // public getUser: BelongsToGetAssociationMixin<User>;
+  public getUser: BelongsToGetAssociationMixin<User>;
 
  public static associations: {
    recipe: Association<Recipe>;
-   // user: Association<User>;
+   user: Association<User>;
  }
 
 }
@@ -55,10 +55,10 @@ export const FaveFactory = (sequelize: Sequelize) => {
   })
 
 
-  Fave.associate = (models: DbInterface) => {
-    Fave.belongsTo(models.Recipe);
-    // Fave.belongsTo(models.User);
-  }
+  // Fave.associate = (models) => {
+    // Fave.belongsTo(Recipe);
+    // Fave.belongsTo(User);
+  // }
 
   return Fave;
 

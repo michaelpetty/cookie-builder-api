@@ -3,7 +3,7 @@ import { BelongsToGetAssociationMixin, Association } from 'sequelize';
 
 import { Recipe } from './recipe'
 import { Ingredient } from './ingredient'
-import { DbInterface } from '../typings/DbInterface';
+// import { DbInterface } from '../typings/DbInterface';
 
 export class RecIng extends Model {
   public id!: number;
@@ -17,7 +17,7 @@ export class RecIng extends Model {
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
-   public static associate(models: DbInterface): void {};
+   // public static associate(models: DbInterface): void {};
 
    public getIngredient: BelongsToGetAssociationMixin<Ingredient>
    public getRecipe: BelongsToGetAssociationMixin<Recipe>
@@ -70,10 +70,10 @@ export const RecIngFactory = (sequelize: Sequelize) => {
     tableName: 'RecIngs'
   })
 
-  RecIng.associate = (models: DbInterface) => {
-    RecIng.belongsTo(models.Recipe);
-    RecIng.belongsTo(models.Ingredient);
-  }
+  // RecIng.associate = (models: DbInterface) => {
+    // RecIng.belongsTo(Recipe);
+    // RecIng.belongsTo(Ingredient);
+  // }
 
   return RecIng;
 

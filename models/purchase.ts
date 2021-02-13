@@ -2,8 +2,8 @@ import { Sequelize, Model, DataTypes } from 'sequelize';
 import { BelongsToGetAssociationMixin, Association } from 'sequelize';
 
 import { Recipe } from './recipe'
-// import { User } from './user'
-import { DbInterface } from '../typings/DbInterface';
+import { User } from './user'
+// import { DbInterface } from '../typings/DbInterface';
 
 export class Purchase extends Model {
   public id!: number;
@@ -12,19 +12,19 @@ export class Purchase extends Model {
   public quantity!: number;
   public paid!: number;
   public RecipeId!: Recipe['id'];
-  // public UserId!: User['id'];
+  public UserId!: User['id'];
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
-  public static associate(models: DbInterface): void {};
+  // public static associate(models: DbInterface): void {};
 
-  // public getUser: BelongsToGetAssociationMixin<User>
+  public getUser: BelongsToGetAssociationMixin<User>
   public getRecipe: BelongsToGetAssociationMixin<Recipe>
 
  public static associations: {
    recipe: Association<Recipe>;
-   // user: Association<User>;
+   user: Association<User>;
  }
 }
 
@@ -71,10 +71,10 @@ export const PurchaseFactory = (sequelize: Sequelize) => {
     tableName: 'Purchases'
   })
 
-  Purchase.associate = (models: DbInterface) => {
-    Purchase.belongsTo(models.Recipe);
-    // Purchase.belongsTo(models.User);
-  }
+  // Purchase.associate = (models: DbInterface) => {
+    // Purchase.belongsTo(Recipe);
+    // Purchase.belongsTo(User);
+  // }
 
   return Purchase;
 
