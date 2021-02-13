@@ -2,7 +2,6 @@ import { Sequelize, Model, DataTypes } from 'sequelize';
 import { BelongsToGetAssociationMixin, BelongsToSetAssociationMixin, Association } from 'sequelize';
 
 import { Recipe } from './recipe'
-// import { DbInterface } from '../typings/DbInterface';
 
 export class RecipeStep extends Model {
   public id!: number;
@@ -13,14 +12,12 @@ export class RecipeStep extends Model {
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
-  // public static associate(models: DbInterface): void {};
-
   public getRecipe: BelongsToGetAssociationMixin<Recipe>
   public setRecipe: BelongsToSetAssociationMixin<Recipe, Recipe['id']>
 
- public static associations: {
-   recipe: Association<Recipe>;
- }
+  public static associations: {
+    recipe: Association<Recipe>;
+  }
 }
 
 export const RecipeStepFactory = (sequelize: Sequelize) => {
@@ -52,10 +49,6 @@ export const RecipeStepFactory = (sequelize: Sequelize) => {
     sequelize,
     tableName: 'RecipeSteps'
   })
-
-  // RecipeStep.associate = (models: DbInterface) => {
-    // RecipeStep.belongsTo(Recipe);
-  // }
 
   return RecipeStep;
 }

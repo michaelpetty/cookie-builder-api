@@ -3,8 +3,6 @@ import { HasManyGetAssociationsMixin, HasManySetAssociationsMixin, Association }
 
 import { RecipeStep } from './recipestep';
 import { RecIng } from './recipeingredient';
-// import { DbInterface } from '../typings/DbInterface';
-
 
 export class Recipe extends Model {
   public id!: number;
@@ -29,8 +27,6 @@ export class Recipe extends Model {
   public setRecIngs: HasManySetAssociationsMixin<RecIng, RecIng['id']>;
   public getRecipeSteps: HasManyGetAssociationsMixin<RecipeStep>;
   public setRecipeSteps: HasManySetAssociationsMixin<RecipeStep, RecipeStep['id']>;
-
-  // public static associate(models: DbInterface): void {};
 
   public static associations: {
     recIngs: Association<Recipe, RecIng>;
@@ -86,19 +82,6 @@ export const RecipeFactory = (sequelize: Sequelize) => {
     sequelize,
     tableName: 'Recipes'
   })
-
-  // Recipe.associate = (models: DbInterface) => {
-    // Recipe.hasMany(models.RecipeStep, {
-    //   sourceKey: 'id',
-    //   foreignKey: 'RecipeId',
-    //   as: 'recipeSteps'
-    // });
-    // Recipe.hasMany(models.RecIng, {
-    //   sourceKey: 'id',
-    //   foreignKey: 'RecipeId',
-    //   as: 'recIngs'
-    // });
-  // }
 
   return Recipe;
 }

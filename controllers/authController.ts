@@ -38,8 +38,7 @@ router.post('/user/signup', (req: Request, res: Response) => {
                 },
                 async (err, signedJwt) => {
                   const faves = await db.Fave.findAll({where: {UserId: user.id}, include: [{model: db.Recipe}]});
-                  console.log(faves);
-
+                  user.password = '';
                   res.status(200).json({
                     message: 'User Created',
                     user,

@@ -1,5 +1,4 @@
 import {Sequelize} from 'sequelize';
-// import { DbInterface } from 'typings/DbInterface';
 import { RecipeFactory } from './recipe';
 import { RecipeStepFactory } from './recipestep';
 import { RecIngFactory } from './recipeingredient';
@@ -27,11 +26,6 @@ export const createModels = (sequelizeConfig: any) => {
     Fave: FaveFactory(sequelize)
   }
 
-  // Object.keys(db).forEach(modelName => {
-  //   if (db[modelName].associate) {
-  //     db[modelName].associate(db);
-  //   }
-  // })
   db.Recipe.hasMany(db.RecipeStep, {
     sourceKey: 'id',
     foreignKey: 'RecipeId',

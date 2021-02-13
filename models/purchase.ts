@@ -3,7 +3,6 @@ import { BelongsToGetAssociationMixin, Association } from 'sequelize';
 
 import { Recipe } from './recipe'
 import { User } from './user'
-// import { DbInterface } from '../typings/DbInterface';
 
 export class Purchase extends Model {
   public id!: number;
@@ -17,15 +16,13 @@ export class Purchase extends Model {
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
-  // public static associate(models: DbInterface): void {};
-
   public getUser: BelongsToGetAssociationMixin<User>
   public getRecipe: BelongsToGetAssociationMixin<Recipe>
 
- public static associations: {
-   recipe: Association<Recipe>;
-   user: Association<User>;
- }
+  public static associations: {
+    recipe: Association<Recipe>;
+    user: Association<User>;
+  }
 }
 
 export const PurchaseFactory = (sequelize: Sequelize) => {
@@ -70,11 +67,6 @@ export const PurchaseFactory = (sequelize: Sequelize) => {
     sequelize,
     tableName: 'Purchases'
   })
-
-  // Purchase.associate = (models: DbInterface) => {
-    // Purchase.belongsTo(Recipe);
-    // Purchase.belongsTo(User);
-  // }
 
   return Purchase;
 
