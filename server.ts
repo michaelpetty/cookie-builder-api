@@ -31,9 +31,10 @@ app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+app.use(express.static('public'));
 
 //----------------- HTML ENDPOINT ---------------//
-app.get('/', (req: Request, res: Response) => res.send('<h1>Welcome to Cookie Builder API</h1>'));
+app.get('/', (req: Request, res: Response) => res.sendFile('./views/', {root:__dirname}));
 
 
 //----------------- API ENDPOINT ---------------//

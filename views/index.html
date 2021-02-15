@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="API for cookie-builder React App. View recipes, create users or login, send messages. A portfolio app built on Node Express by Michael Petty in San Francisco.">
+  <meta name="keywords" content="nodejs, express, api, michael petty, full stack, developer, san francisco">
+  <title>Cookie Builder API</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" href="/favicon.ico">
+</head>
+<body>
+  <header>
+    <h1>Cookie Builder API</h1>
+  </header>
+  <main>
+    <h2>Resource Endpoints</h2>
+    <section>
+      <h3>Recipes</h3>
+      <p><strong>Show All Recipes:</strong></p>
+      <pre><a href="/api/v1/recipes" target="_blank">/api/v1/recipes</a></pre>
+      <p>Example response:</p>
+      <pre>
+        <code>[
+  {
+    "id":1,
+    "name":"Toll House Chocolate Chip",
+    "picture":"/i/c/chocolate-chip.jpg",
+    "price":"12.99",
+    "yield":"Makes about 5 dozen",
+    "activeTime":"15 minutes",
+    "totalTime":"30 minutes",
+    "preheat":"375",
+    "intro":"",
+    "note":"",
+    "source":"Very Best Baking by Nestle",
+    "sourceURL":"https://www.verybestbaking.com/recipes/18476/original-nestle-toll-house-chocolate-chip-cookies/",
+    "createdAt":"2021-02-09T19:03:55.603Z",
+    "updatedAt":"2021-02-09T19:03:55.603Z"
+  },{
+    "id":2,
+    "name":"Vanishing Oatmeal Raisin",
+    "picture":"/i/c/oatmeal-raisin.jpg",
+    "price":"15.99",
+    "yield":"4 dozen",
+    "activeTime":"15 minutes",
+    "totalTime":"25 minutes",
+    "preheat":"350",
+    "intro":"",
+    "note":"Variations: Stir in 1 cup chopped nuts. Substitute 1 cup semisweet chocolate chips or candy-coated chocolate pieces for raisins; omit cinnamon. Substitute 1 cup diced dried mixed fruit.",
+    "source":"Quaker Oats",
+    "sourceURL":"https://www.quakeroats.com/cooking-and-recipe/vanishing-oatmeal-raisin-cookies/",
+    "createdAt":"2021-02-09T19:03:55.666Z",
+    "updatedAt":"2021-02-09T19:03:55.666Z"
+  }
+]
+        </code>
+      </pre>
+      <p><strong>Show Detail Recipe:</strong></p>
+      <pre><a href="/api/v1/recipes/2" target="_blank">/api/v1/recipes/2</a></pre>
+      <p>Example response:</p>
+      <pre>
+        <code>{
+  "id":2,
+  "name":"Vanishing Oatmeal Raisin",
+  "picture":"/i/c/oatmeal-raisin.jpg",
+  "price":"15.99",
+  "yield":"4 dozen",
+  "activeTime":"15 minutes",
+  "totalTime":"25 minutes",
+  "preheat":"350",
+  "intro":"",
+  "note":"Variations: Stir in 1 cup chopped nuts. Substitute 1 cup semisweet chocolate chips or candy-coated chocolate pieces for raisins; omit cinnamon. Substitute 1 cup diced dried mixed fruit.",
+  "source":"Quaker Oats",
+  "sourceURL":"https://www.quakeroats.com/cooking-and-recipe/vanishing-oatmeal-raisin-cookies/",
+  "createdAt":"2021-02-09T19:03:55.666Z",
+  "updatedAt":"2021-02-09T19:03:55.666Z"
+}
+        </code>
+      </pre>
+      <p><strong>Show Detail Recipe with Steps and Ingredients:</strong></p>
+      <pre><a href="/api/v1/recipes/2/full" target="_blank">/api/v1/recipes/2/full</a></pre>
+      <p>Example response:</p>
+      <pre>
+        <code>{
+  "recipe": {
+    "id":2,
+    "name":"Vanishing Oatmeal Raisin",
+    "picture":"/i/c/oatmeal-raisin.jpg",
+    "price":"15.99",
+    "yield":"4 dozen",
+    "activeTime":"15 minutes",
+    "totalTime":"25 minutes",
+    "preheat":"350",
+    "intro":"",
+    "note":"Variations: Stir in 1 cup chopped nuts. Substitute 1 cup semisweet chocolate chips or candy-coated chocolate pieces for raisins; omit cinnamon. Substitute 1 cup diced dried mixed fruit.",
+    "source":"Quaker Oats",
+    "sourceURL":"https://www.quakeroats.com/cooking-and-recipe/vanishing-oatmeal-raisin-cookies/",
+    "createdAt":"2021-02-09T19:03:55.666Z",
+    "updatedAt":"2021-02-09T19:03:55.666Z"
+  },
+  "recipeSteps":[
+    {
+      "id":9,
+      "RecipeId":2,
+      "body":
+      "In large bowl, beat butter and sugars on medium speed of electric mixer until creamy. Add eggs and vanilla; beat well.",
+      "stepOrder":1,
+      "createdAt":"2021-02-09T19:03:55.668Z",
+      "updatedAt":"2021-02-09T19:03:55.668Z"
+    },{
+      "id":10,
+      "RecipeId":2,
+      "body":" Add combined flour, baking soda, cinnamon and salt; mix well.",
+      "stepOrder":2,
+      "createdAt":"2021-02-09T19:03:55.671Z",
+      "updatedAt":"2021-02-09T19:03:55.671Z"
+    }, ...
+  ],
+  "ingredients":[
+    {
+      "id":10,
+      "RecipeId":2,
+      "IngredientId":4,
+      "recIngOrder":1,
+      "preparation":"softened",
+      "amount":"14",
+      "unit":"tbl.",
+      "createdAt":"2021-02-09T19:03:55.685Z",
+      "updatedAt":"2021-02-09T19:03:55.685Z",
+      "Ingredient":{
+        "id":4,
+        "name":"butter",
+        "popularity":100,
+        "createdAt":"2021-02-09T19:03:55.553Z",
+        "updatedAt":"2021-02-09T19:03:55.553Z"
+      }
+    },{
+      "id":11,
+      "RecipeId":2,
+      "IngredientId":6,
+      "recIngOrder":2,
+      "preparation":null,
+      "amount":"3/4",
+      "unit":"cup",
+      "createdAt":"2021-02-09T19:03:55.688Z",
+      "updatedAt":"2021-02-09T19:03:55.688Z",
+      "Ingredient":{
+        "id":6,
+        "name":"light brown sugar",
+        "popularity":100,
+        "createdAt":"2021-02-09T19:03:55.558Z",
+        "updatedAt":"2021-02-09T19:03:55.558Z"
+      }
+    },...
+  ]
+}
+        </code>
+      </pre>
+
+    </section>
+  </main>
+  <footer>Michael Petty &copy; 2021</footer>
+</body>
+</html>

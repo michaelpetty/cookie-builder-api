@@ -1,0 +1,55 @@
+* {
+  box-sizing: border-box;
+}
+
+a {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: inherit;
+  text-decoration: none;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background-image: url('/i/mixerBkgLight2.png');
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h3 {
+  font-size: 1.25em
+}
+
+header, main, footer {
+
+  margin: 0 2rem;
+}
+
+p, pre {
+  margin: 0 0 .7rem;
+}
+
+pre {
+  background-color: #FFF;
+  border: 1px solid #666;
+  border-radius: 4px;
+  line-height: 1.5;
+  padding: .3rem;
+  word-break: break-all;
+}
+
+pre > code {
+    padding: 0;
+    font-size: .8em;
+    white-space: pre-wrap;
+    background-color: transparent;
+    border-radius: 0;
+    height: 20em;
+    overflow: scroll;
+    display: block;
+}
+
+.code-block {
+  height: 20em;
+  overflow: scroll;
+}
