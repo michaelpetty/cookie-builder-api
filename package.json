@@ -5,7 +5,7 @@
   "main": "build/server.js",
   "scripts": {
     "start-dev": "nodemon --exec ts-node  server.ts",
-    "build": "rm -rf ./build && tsc",
+    "build": "rm -rf ./build && tsc && cp ./config/sequelizeConfig.js ./build/config/ && cp -r ./views ./build/",
     "start": "node build/server.js",
     "seed-data": "ts-node seed.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
