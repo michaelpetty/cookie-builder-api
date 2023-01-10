@@ -2,6 +2,8 @@ import express from 'express';
 import {Request, Response, NextFunction} from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import https from 'https';
+import fs from 'fs';
 import './config/env';
 import { createModels } from './models';
 import apiCtrl from './controllers/apiController';
@@ -49,4 +51,14 @@ app.use('/msg', msgCtrl);
 
 
 //----------------- START 'ER UP ---------------//
-app.listen(PORT, () => console.log(`API started on port ${PORT}`));
+// if NODE_ENV production or explicitly want HTTPS
+if (process.env.NODE_ENV === 'production' || process.env.FORCE_HTTPS) {
+  const httpsServer = https.createServer({
+    key: fs.readFileSync(process.env.HTTPS_KEY_FILE),
+    cert: fs.readFileSync(process.env.HTTPS_CERT_FILE)
+  }, app)
+  httpsServer.listen(PORT, () => console.log(`API (HTTPS) started on port ${PORT}`))
+} else {
+  app.listen(PORT, () => console.log(`API (http) started on port ${PORT}`));
+}
+
