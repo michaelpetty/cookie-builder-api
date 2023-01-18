@@ -1,6 +1,5 @@
 import express from 'express';
 import {Request, Response, NextFunction} from 'express';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import https from 'https';
 import fs from 'fs';
@@ -30,8 +29,8 @@ const corsOptions = {
 app.options('*', cors());
 app.use(cors(corsOptions));
 
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
 
 app.use(express.static('public'));
 
